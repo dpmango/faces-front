@@ -1,0 +1,82 @@
+
+.profile
+  display: flex
+  justify-content: center
+  align-items: center
+  width: 80vw
+  height: 100vh
+  margin: 0 auto
+  @media (max-width: 970px)
+    display: block
+    width: 90vw
+
+.back-to-grid, .back-home
+  position: absolute
+  top: 3%
+  right: 4%
+  color: #FFF
+  z-index: 5000
+  text-shadow: 1px 1px #333333
+  transition: color 1s ease
+  &:hover
+    color: #CC208E
+    text-decoration: none
+
+.profile p
+  color: #6D6875
+
+.imgWithFilter
+  width: 50%
+  height: 500px
+  opacity: 0
+  transform: translateX(25%)
+  @media (max-width: 970px)
+    margin-top: 150px
+    width: 100%
+    height: auto
+
+.imgWithFilter img
+  max-width: 100%
+  max-height: 100%
+  display: block
+  margin: 0 auto
+
+.imgWithFilter canvas
+  width: 500px
+  @media (max-width: 970px)
+    display: block
+    width: 300px
+    margin: 0 auto
+
+.userInfo
+  width: 50%
+  font-family: 'Roboto Condensed', sans-serif
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  .info-container
+    width: 60%
+    @media (max-width: 970px)
+      width: 100%
+      margin: 15px
+      margin-top: 80px
+  h1
+    color: #CC208E
+    font-size: 3rem
+  h3
+    font-family: 'Abel', sans-serif
+    font-size: 1.5rem
+    font-weight: lighter
+    color: #6D6875
+  .info-item
+    margin-bottom: 20px
+    opacity: 0
+    transform: translateY(20%)
+    font-weight: lighter
+  .linkedin-profile
+    display: inline-block
+    margin: 0
+    margin-top: 30px
+  @media (max-width: 970px)
+    width: 100%

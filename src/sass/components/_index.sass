@@ -1,0 +1,107 @@
+.login a
+  border: none
+  position: absolute
+  top: 3%
+  right: 2%
+  background-color: transparent
+  font-size: 1.2rem
+  transition: color 5s ease
+  &:hover
+    color: #CC208E
+    background-image: none
+    background-color: transparent
+    box-shadow: none
+
+
+// ---------------> FORM
+
+.form-container
+  display: flex
+  width: 80vw
+  margin: 0 auto
+  margin-top: 60px
+
+@media (max-width: 970px)
+  .form-container
+    width: 90vw
+    display: block
+
+.image-and-filters
+  width: 50%
+  padding: 35px
+  .form-group
+    text-align: right
+    margin-right: 15%
+    @media (max-width: 970px)
+      text-align: center
+      margin: 50px
+      margin-right: 0
+      margin-left: 0
+  @media (max-width: 970px)
+    width: 100%
+
+.big-img
+  display: block
+  margin: 0 auto
+  margin-bottom: 35px
+  width: 70%
+
+#change-img
+  margin-top: 50px
+  &:focus
+    outline: none
+
+.form-control-file
+  display: none
+
+.change-img-label
+  padding: 10px
+  font-size: 1rem
+  display: inline-block
+  margin: 0 auto
+  &:hover
+    img.upload-grey
+      display: none
+    img.upload-white
+      display: inline
+  img
+    background: transparent
+    &.upload-white
+      display: none
+
+.form-inner
+  width: 50%
+  padding: 35px
+  @media (max-width: 970px)
+    width: 100%
+
+form
+  width: 70%
+  margin: 0 auto
+  @media (max-width: 970px)
+    width: 100%
+
+.form-control
+  color: #CC208E
+  border-radius: 0
+  padding: 10px
+  background: none
+  border: 1px solid #6D6875
+  &:focus
+    border: 1px dotted #CC208E
+    color: #FFF
+    background: #000
+
+label
+  color: #6D6875
+  font-family: 'Roboto Condensed', sans-serif
+
+select
+  -webkit-appearance: none
+
+.button-container
+  text-align: right
+
+.btn.btn-secondary
+  font-size: 1rem
+  margin-top: 50px

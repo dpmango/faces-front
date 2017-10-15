@@ -1,0 +1,40 @@
+// buttons
+button
+  -webkit-apperance: none
+  border: 0
+  box-shadow: none
+  &:focus
+    outline: none
+
+.btn
+  display: inline-block
+  position: relative
+  text-align: center
+  cursor: pointer
+  font-size: 1.4rem
+  transition: all $transitionSpeed ease-in-out
+  &:focus, &:active
+    outline: none
+  &--block
+    display: block
+    width: 100%
+  &-line
+    span
+      position: relative
+      z-index: 2
+    &::after
+      display: inline-block
+      content: ' '
+      position: absolute
+      z-index: 1
+      top: 50%
+      transform: translate3d(0,-50%,0)
+      left: 50%
+      right: 50%
+      background: currentColor
+      height: 2px
+      transition: all $transitionSpeed $ease
+    &:hover
+      &::after
+        left: -5%
+        right: -5%

@@ -1,0 +1,34 @@
+.intro
+  position: relative
+  width: 100%
+  height: 100vh
+  margin: 0 auto
+  padding: 0 40px
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  color: white
+
+  &__description
+    display: flex
+    max-width: 800px
+    margin: auto
+    // animate with twinmax
+    opacity: 0
+
+  &__control
+    width: 33.3%
+    flex: 0 1 33.3%
+    padding: 20px
+    text-align: center
+    font-size: 16px
+    line-height: 1.5
+
+  &__cta
+    position: absolute
+    bottom: 5vh
+    left: 50%
+    transform: translateX(-50%)
+    // animate with twinmax
+    opacity: 0
