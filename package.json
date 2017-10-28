@@ -55,6 +55,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "surge": "surge --domain hd-visions.surge.sh --project ./build",
     "developer": "concurrently --kill-others \"gulp\" \"yarn start\"",
     "builder": "concurrently --kill-others \"gulp build --production\" \"yarn build\""
   }

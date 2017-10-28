@@ -5,11 +5,11 @@ import photoUrl from './photoUrl';
 import click from './click';
 
 export default class CanvasGrid {
-  constructor(gridContainer, users, redirectToProfile) {
+  constructor(gridContainer, posts, redirectToProfile) {
     this.gridContainer = gridContainer;
-    this.users = Object.keys(users).map((key) => {
-      users[key].id = key;
-      return users[key];
+    this.posts = Object.keys(posts).map((key) => {
+      posts[key].id = key;
+      return posts[key];
     });
 
     this.redirectToProfile = redirectToProfile;
@@ -40,9 +40,9 @@ export default class CanvasGrid {
     this.grid = {};
     // this.clickImage();
 
-    this.images = this.users.map((user) => {
+    this.images = this.posts.map((post) => {
       const image = new Image();
-      image.src = photoUrl(user.photo);
+      image.src = photoUrl(post.photo);
       image.crossOrigin = "Anonymous";
       return image;
     });
@@ -130,7 +130,7 @@ export default class CanvasGrid {
       width: options[randomOption].width,
       height: options[randomOption].height,
       image: this.images[this.currentImage],
-      user: this.users[this.currentImage],
+      post: this.posts[this.currentImage],
       scale: 0.001
     }
 
@@ -254,7 +254,7 @@ export default class CanvasGrid {
   //     const col = Math.floor(e.clientX / this.squareSize);
   //
   //     const gridImage = this.grid[row][col];
-  //     this.redirectToProfile(gridImage.user.id);
+  //     this.redirectToProfile(gridImage.post.id);
   //   });
   // }
 
@@ -288,7 +288,7 @@ export default class CanvasGrid {
         const col = Math.floor((e.srcEvent.clientX - this.xMovement()) / this.squareSize);
 
         const gridImage = this.grid[row][col];
-        this.redirectToProfile(gridImage.user.id);
+        this.redirectToProfile(gridImage.post.id);
       }
     });
   }
