@@ -14,20 +14,20 @@ export default class Profile extends React.Component {
     super();
 
     this.state = {
-      user: null,
-
+      post: null,
     }
   }
 
   componentWillMount() {
-    const userId = this.props.match.params.uuid;
+    const postId = this.props.match.params.uuid;
 
-    api.get(`users/${userId}`, {
+    api.get(`posts/${postId}`, {
       context: this
-    }).then(user => {
+    }).then(post => {
       this.setState({
-        user: user
+        post: post.data
       });
+      console.log(this.state.post)
       this.animateTransition();
     });
   }
@@ -39,50 +39,46 @@ export default class Profile extends React.Component {
 
 
   renderFilter = (photo, filter) => {
-    if (filter === 'circle') {
-      return <CircleFilter photo={photo} />
-    }
-    if (filter === 'text') {
-      return <TextFilter photo={photo} text='hello!' />
-    }
-    if (filter === 'desandro') {
-      return <DesandroFilter photo={photo} />
-    }
-    if (filter === 'una') {
-      return <UnaFilter photo={photo} />
-    }
+    return <UnaFilter photo={photo} />
+    // if (filter === 'circle') {
+    //   return <CircleFilter photo={photo} />
+    // }
+    // if (filter === 'text') {
+    //   return <TextFilter photo={photo} text='взгляд!' />
+    // }
+    // if (filter === 'desandro') {
+    //   return <DesandroFilter photo={photo} />
+    // }
+    // if (filter === 'una') {
+    //   return <UnaFilter photo={photo} />
+    // }
   }
 
   render() {
-    const { user } = this.state;
+    const { post } = this.state;
 
-    if (!this.state.user) {
+    if (!this.state.post) {
       return (
-        <p>loading</p>
+        <p>Загрузка...</p>
       )
     }
 
     return (
       <div className="profile">
         <Link className="back-to-grid" to='/grid'>
-          GRID
+          НАЗАД
         </Link>
 
         <div className="imgWithFilter" ref={(div) => this.imgWithFilter = div}>
-          {this.renderFilter(user.photo, user.filter)}
+          {this.renderFilter(post.photo, post.filter)}
         </div>
 
         <div className="userInfo">
           <div className="info-container">
-            <h1 className="info-item">{user.name}</h1>
-            <h3 className="info-item">{user.title.toUpperCase()}</h3>
-            <p className="info-item">
-              {user.description}
-            </p>
+            <h1 className="info-item">{post.name}</h1>
+            <h3 className="info-item">{post.position.toUpperCase()}</h3>
+            <p className="info-item" dangerouslySetInnerHTML={{ __html: post.description }} />
 
-            <a className="linkedin-profile info-item" href={user.linkedin}>
-              SEE LINKEDIN
-            </a>
           </div>
 
         </div>

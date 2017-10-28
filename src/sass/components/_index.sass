@@ -21,7 +21,7 @@
   margin: 0 auto
   margin-top: 60px
 
-@media (max-width: 970px)
++r($desktop)
   .form-container
     width: 90vw
     display: block
@@ -32,12 +32,12 @@
   .form-group
     text-align: right
     margin-right: 15%
-    @media (max-width: 970px)
+    +r($desktop)
       text-align: center
       margin: 50px
       margin-right: 0
       margin-left: 0
-  @media (max-width: 970px)
+  +r($desktop)
     width: 100%
 
 .big-img
@@ -72,13 +72,13 @@
 .form-inner
   width: 50%
   padding: 35px
-  @media (max-width: 970px)
+  +r($desktop)
     width: 100%
 
 form
   width: 70%
   margin: 0 auto
-  @media (max-width: 970px)
+  +r($desktop)
     width: 100%
 
 .form-control

@@ -19,7 +19,6 @@ export default class Grid extends React.Component {
     api.get('posts', {
       data: {},
     }).then((res) => {
-      console.log('Получили данные с API', res)
       this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard);
     });
   }
@@ -41,7 +40,8 @@ export default class Grid extends React.Component {
   render() {
     return (
       <div className="grid">
-        <div className="grid-container moon" ref={(div) => this.gridContainer = div}></div>
+        {/* we can set filter here -- moon or _1977 (css only) */}
+        <div className="grid-container inkwell" ref={(div) => this.gridContainer = div}></div>
         <div className={`grid-transition ${this.state.transitioning ? 'active' : ''} `}></div>
       </div>
     );

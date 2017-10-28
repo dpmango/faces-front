@@ -4,7 +4,7 @@ export default class UnaFilter extends React.Component {
 
   render() {
     return (
-      <img className="_1977" src={this.props.photo} alt="image" />
+      <img className="_1977" src={this.props.photo.url} alt="image" />
     )
   }
 }

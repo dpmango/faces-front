@@ -6,7 +6,7 @@
   width: 80vw
   height: 100vh
   margin: 0 auto
-  @media (max-width: 970px)
+  +r($desktop)
     display: block
     width: 90vw
 
@@ -30,7 +30,7 @@
   height: 500px
   opacity: 0
   transform: translateX(25%)
-  @media (max-width: 970px)
+  +r($desktop)
     margin-top: 150px
     width: 100%
     height: auto
@@ -43,7 +43,7 @@
 
 .imgWithFilter canvas
   width: 500px
-  @media (max-width: 970px)
+  +r($desktop)
     display: block
     width: 300px
     margin: 0 auto
@@ -57,7 +57,7 @@
   flex-direction: column
   .info-container
     width: 60%
-    @media (max-width: 970px)
+    +r($desktop)
       width: 100%
       margin: 15px
       margin-top: 80px
@@ -74,9 +74,6 @@
     opacity: 0
     transform: translateY(20%)
     font-weight: lighter
-  .linkedin-profile
-    display: inline-block
-    margin: 0
-    margin-top: 30px
-  @media (max-width: 970px)
+
+  +r($desktop)
     width: 100%

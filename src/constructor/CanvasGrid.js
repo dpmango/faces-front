@@ -38,7 +38,6 @@ export default class CanvasGrid {
     this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
 
     this.grid = {};
-    // this.clickImage();
 
     this.images = this.posts.map((post) => {
       const image = new Image();
@@ -189,31 +188,10 @@ export default class CanvasGrid {
     this.gridStatus = 'inactive';
   }
 
-  // http://spyrestudios.com/html5-canvas-image-effects-black-white/
-  // & http://www.html5canvastutorials.com/advanced/html5-canvas-grayscale-image-colors-tutorial/
-  // grayscaling = () => {
-  //   const imageData = this.context.getImageData(0, 0, window.innerWidth, window.innerHeight);
-  //
-  //   for (let i = 0; i < imageData.data.length; i += 4) {
-  //     const brightness = 0.3 * imageData.data[i] + 0.59 * imageData.data[i + 1] + 0.11 * imageData.data[i + 2];
-  //     // red
-  //     imageData.data[i] = brightness;
-  //     // green
-  //     imageData.data[i + 1] = brightness;
-  //     // blue
-  //     imageData.data[i + 2] = brightness;
-  //   }
-  //   this.context.putImageData(imageData, 0, 0);
-  // }
-
-
-
   // Simulating background cover so that the images are centered to cover the square and they aren't stretched
-  /**
- * By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
- * drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
- * If image and context are only arguments rectangle will equal canvas
-*/
+  // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
+  // drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
+
   drawImageProp = (ctx, img, x, y, w, h) => {
     const offsetX = 0.5;
     const offsetY = 0.5;
@@ -247,16 +225,6 @@ export default class CanvasGrid {
     // fill image in dest. rectangle
     ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
   }
-
-  // clickImage = () => {
-  //   this.canvas.addEventListener('click', (e) => {
-  //     const row = Math.floor(e.clientY / this.squareSize);
-  //     const col = Math.floor(e.clientX / this.squareSize);
-  //
-  //     const gridImage = this.grid[row][col];
-  //     this.redirectToProfile(gridImage.post.id);
-  //   });
-  // }
 
   // http://codepen.io/jtangelder/pen/ABFnd
   dragCanvas = () => {
