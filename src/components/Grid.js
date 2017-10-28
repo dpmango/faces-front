@@ -19,6 +19,7 @@ export default class Grid extends React.Component {
     api.get('posts', {
       data: {},
     }).then((res) => {
+      console.log('got API responce', res.data)
       this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard);
     });
   }

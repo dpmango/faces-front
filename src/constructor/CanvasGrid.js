@@ -8,10 +8,12 @@ import click from './click';
 export default class CanvasGrid {
   constructor(gridContainer, posts, redirectToProfile) {
     this.gridContainer = gridContainer;
-    this.posts = Object.keys(posts).map((key) => {
-      posts[key].id = key;
-      return posts[key];
-    });
+    // don't mutate the state
+    // this.posts = Object.keys(posts).map((key) => {
+    //   posts[key].id = key;
+    //   return posts[key];
+    // });
+    this.posts = posts
 
     this.redirectToProfile = redirectToProfile;
 
@@ -94,7 +96,7 @@ export default class CanvasGrid {
         }
       }
     }
-    console.log('Grid layout', this.grid)
+    // console.log('Grid layout', this.grid)
   }
 
   fillSquare = (row, col) => {
@@ -134,8 +136,7 @@ export default class CanvasGrid {
       height: options[randomOption].height,
       image: this.images[this.currentImage],
       post: this.posts[this.currentImage],
-      scale: 0.001,
-      hovered: false
+      scale: 0.001
     }
 
     TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
@@ -143,6 +144,8 @@ export default class CanvasGrid {
     this.gridImages.push(gridImage);
 
     this.currentImage += 1;
+    console.log('this.currentImage', this.currentImage)
+    console.log('this.images.length', this.images.length)
     if (this.currentImage === this.images.length) {
       this.currentImage = 0;
     }
@@ -265,6 +268,7 @@ export default class CanvasGrid {
         const col = Math.floor((e.srcEvent.clientX - this.xMovement()) / this.squareSize);
 
         const gridImage = this.grid[row][col];
+        console.log('redirecting to profile', gridImage)
         this.redirectToProfile(gridImage.post.id);
       }
     });
@@ -275,6 +279,9 @@ export default class CanvasGrid {
     const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
 
     let currImage = this.grid[row][col];
+
+    // debbug error when hovered blank image
+    // (not loaded or canvas resizing?)
 
     if ( currImage == this.selectedImage ){
       TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});

@@ -2,24 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { TweenMax, Back } from 'gsap';
-import { Howl } from 'howler';
 
 export default class Intro extends Component {
   constructor() {
     super();
-
-    this.bgAudio = new Howl({
-      src: ['/piano2.mp3'],
-      loop: true,
-      volume: 0.25,
-      rate: 0.70
-    });
-
   }
   componentDidMount() {
     this.animateIntro();
-
-    this.bgAudio.play();
   }
 
   animateIntro = () => {

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Howl } from 'howler';
 
 import Intro from './components/Intro';
 import Grid from './components/Grid';
@@ -9,17 +10,32 @@ import ProfileForm from './components/ProfileForm';
 
 import './css/app.css';
 
-const Root = function() {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Intro} />
-        <Route path="/form" component={ProfileForm} />
-        <Route exact path="/grid" component={Grid} />
-        <Route path="/grid/:uuid" component={Profile} />
-      </Switch>
-    </BrowserRouter>
-  );
+class Root extends React.Component {
+  constructor() {
+    super();
+    this.bgAudio = new Howl({
+      src: ['/piano2.mp3'],
+      loop: true,
+      volume: 0.25,
+      rate: 0.70
+    });
+  };
+
+  componentDidMount() {
+    this.bgAudio.play();
+  }
+  render(){
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Intro} />
+          <Route path="/form" component={ProfileForm} />
+          <Route exact path="/grid" component={Grid} />
+          <Route path="/grid/:uuid" component={Profile} />
+        </Switch>
+      </BrowserRouter>
+    );  
+  }
 }
 
 ReactDOM.render(<Root />, document.getElementById('app'));
