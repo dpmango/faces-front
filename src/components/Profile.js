@@ -27,7 +27,6 @@ export default class Profile extends React.Component {
       this.setState({
         post: post.data
       });
-      console.log(this.state.post)
       this.animateTransition();
     });
   }

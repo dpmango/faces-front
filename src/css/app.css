@@ -877,7 +877,7 @@ button:focus {
 }
 
 .back-to-grid:hover, .back-home:hover, .back-to-grid:focus, .back-home:focus {
-  color: #CC208E;
+  color: #f45b63;
   text-decoration: none;
 }
 
@@ -956,7 +956,7 @@ button:focus {
 }
 
 .userInfo h1 {
-  color: #CC208E;
+  color: #f45b63;
   font-size: 3rem;
 }
 

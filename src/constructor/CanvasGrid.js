@@ -1,5 +1,6 @@
 import Hammer from 'hammerjs';
 import { TweenMax } from 'gsap';
+import {throttle} from 'lodash';
 
 import photoUrl from './photoUrl';
 import click from './click';
@@ -47,8 +48,10 @@ export default class CanvasGrid {
     });
 
     this.currentImage = 0;
+    this.selectedImage = {};
     this.gridImages = [];
     this.dragCanvas();
+    this.hoverCanvas();
     this.initializeGrid();
     this.fillGrid();
     this.render();
@@ -91,6 +94,7 @@ export default class CanvasGrid {
         }
       }
     }
+    console.log('Grid layout', this.grid)
   }
 
   fillSquare = (row, col) => {
@@ -130,7 +134,8 @@ export default class CanvasGrid {
       height: options[randomOption].height,
       image: this.images[this.currentImage],
       post: this.posts[this.currentImage],
-      scale: 0.001
+      scale: 0.001,
+      hovered: false
     }
 
     TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
@@ -158,6 +163,8 @@ export default class CanvasGrid {
     this.drawImages();
     // this.grayscaling();
     if (this.gridStatus === 'playing') {
+      // REFACTOR
+      // need some kind of throttle?
       requestAnimationFrame(this.render);
     }
   }
@@ -226,11 +233,13 @@ export default class CanvasGrid {
     ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
   }
 
-  // http://codepen.io/jtangelder/pen/ABFnd
   dragCanvas = () => {
+
     const hammer = new Hammer(this.canvas);
+    // hammer.defaults = {
+    //   domEvents: true
+    // }
     hammer.get('pan').set({
-      // By default it only does horizontal dragging but by saying direction all, you can do it in every direction.
       direction: Hammer.DIRECTION_ALL
     });
 
@@ -260,4 +269,25 @@ export default class CanvasGrid {
       }
     });
   }
+
+  getHoveredGrid = (e) => {
+    const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
+    const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
+
+    let currImage = this.grid[row][col];
+
+    if ( currImage == this.selectedImage ){
+      TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});
+    } else {
+      // update global selected image only if changed
+      TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+      this.selectedImage = currImage;
+    }
+  }
+
+  hoverCanvas = () => {
+    let throttled = throttle(this.getHoveredGrid, 100, { 'trailing': false });
+    this.canvas.addEventListener('mousemove', throttled)
+  }
+
 }
