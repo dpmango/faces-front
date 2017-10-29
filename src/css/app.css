@@ -809,7 +809,7 @@ ul li {
 body, html {
   background: white;
   color: #333;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   min-width: 320px;
   max-width: 100%;
@@ -1472,6 +1472,45 @@ select {
 .btn.btn-secondary {
   font-size: 1rem;
   margin-top: 50px;
+}
+
+.s-page {
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+}
+
+.s-page__content {
+  margin: auto;
+  width: 100%;
+  padding: 80px 40px 40px 40px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.s-page__content p {
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+.s-page__title {
+  font-size: 36px;
+  margin: .7em 0;
 }
 
 /*# sourceMappingURL=app.css.map */

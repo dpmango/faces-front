@@ -30,12 +30,12 @@ export default class Menu extends React.Component {
           <div className="menu__wrapper">
             <div className="menu__navigation">
               <div className="menu__li">
-                <Link className="btn btn-line" to='/grid'>
+                <Link className="btn btn-line" to='/about'>
                   <span>О Проекте</span>
                 </Link>
               </div>
               <div className="menu__li">
-                <Link className="btn btn-line" to='/grid'>
+                <Link className="btn btn-line" to='/brand'>
                   <span>О Бренде</span>
                 </Link>
               </div>

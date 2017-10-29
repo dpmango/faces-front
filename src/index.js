@@ -7,6 +7,7 @@ import Intro from './components/Intro';
 import Grid from './components/Grid';
 import Profile from './components/Profile';
 import ProfileForm from './components/ProfileForm';
+import Page from './components/Page';
 
 import './css/app.css';
 
@@ -32,9 +33,10 @@ class Root extends React.Component {
           <Route path="/form" component={ProfileForm} />
           <Route exact path="/grid" component={Grid} />
           <Route path="/grid/:uuid" component={Profile} />
+          <Route path="/:pagename" component={Page} />
         </Switch>
       </BrowserRouter>
-    );  
+    );
   }
 }
 

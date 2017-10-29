@@ -2,7 +2,7 @@ import React from 'react';
 import api from '../constructor/Api'
 import CanvasGrid from '../constructor/CanvasGrid';
 
-import Menu from './Menu';
+import Topbar from './Topbar';
 import { Link } from 'react-router-dom';
 
 import { TweenMax } from 'gsap';
@@ -42,9 +42,7 @@ export default class Grid extends React.Component {
   render() {
     return (
       <div className="grid">
-        <div className="topbar">
-          <Menu />
-        </div>
+        <Topbar />
         {/* we can set filter here -- moon or _1977 (css only) */}
         <div className="grid-container inkwell" ref={(div) => this.gridContainer = div}></div>
         <div className={`grid-transition ${this.state.transitioning ? 'active' : ''} `}></div>
