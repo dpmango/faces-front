@@ -35,7 +35,11 @@ export default class CanvasGrid {
       y: 0
     };
 
-    this.squareSize = 225;
+    if ( window.innerWidth < 992 ){
+      this.squareSize = 175;
+    } else {
+      this.squareSize = 225;
+    }
 
     this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
     this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
@@ -144,8 +148,7 @@ export default class CanvasGrid {
     this.gridImages.push(gridImage);
 
     this.currentImage += 1;
-    console.log('this.currentImage', this.currentImage)
-    console.log('this.images.length', this.images.length)
+
     if (this.currentImage === this.images.length) {
       this.currentImage = 0;
     }
@@ -233,7 +236,17 @@ export default class CanvasGrid {
     if (ch > ih) ch = ih;
 
     // fill image in dest. rectangle
+    // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+
+    ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+    ctx.globalCompositeOperation = "multiply"
+    ctx.fillStyle = "rgba(0,0,0,.7)";
+    ctx.fillRect(x, y, w, h)
+    // ctx.globalCompositeOperation = "destination-in";
+    // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+    ctx.globalCompositeOperation = "source-over";
+
   }
 
   dragCanvas = () => {
