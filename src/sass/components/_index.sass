@@ -4,6 +4,22 @@
   right: 40px
   z-index: 10
   color: white
+  background: transparent
+  display: flex
+  align-items: center
+  opacity: 0
+  // transform: translate3d(50px,0px,0)
+  pointer-events: none
+  transition: all .3s .3s ease
+  &__nav
+    margin-right: 25px
+    font-size: 16px
+
+.grid, .s-page
+  .topbar
+    opacity: 1
+    // transform: translate3d(0,0,0)
+    pointer-events: all
 
 .menu
   position: fixed 0

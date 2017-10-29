@@ -9,7 +9,6 @@ export default class Menu extends React.Component {
     super();
 
     this.state = {
-      url: null,
       page: null,
     }
   }
@@ -31,7 +30,6 @@ export default class Menu extends React.Component {
     }).then(page => {
       console.log('got API responce', page)
       this.setState({
-        url: pageName,
         page: page.data
       });
     });

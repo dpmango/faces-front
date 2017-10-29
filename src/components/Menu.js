@@ -11,6 +11,9 @@ export default class Menu extends React.Component {
   }
 
   toggleMenu = () => {
+    // store.dispatch({
+    //   type: "TOGGLE_MENU"
+    // })
     this.setState({
       opened: !this.state.opened ? true : false
     });
@@ -29,6 +32,11 @@ export default class Menu extends React.Component {
         <div className={`menu ${this.state.opened ? 'is-active' : ''} `}>
           <div className="menu__wrapper">
             <div className="menu__navigation">
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/grid'>
+                  <span>UNIVERSE</span>
+                </Link>
+              </div>
               <div className="menu__li">
                 <Link className="btn btn-line" to='/about'>
                   <span>О Проекте</span>

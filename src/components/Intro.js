@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { TweenMax, Back } from 'gsap';
 
+import Topbar from './Topbar';
+
 export default class Intro extends Component {
   constructor() {
     super();
@@ -19,7 +21,7 @@ export default class Intro extends Component {
   render() {
     return (
       <div className="intro">
-
+        <Topbar />
         <div className="intro__description">
           <div className="intro__control">
             Используйте механизм бесконечной прокрутки

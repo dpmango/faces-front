@@ -34,7 +34,14 @@ button
       background: currentColor
       height: 2px
       transition: all $transitionSpeed $ease
-    &:hover
+    &:hover, &.is-active
       &::after
         left: -5%
         right: -5%
+        
+    // reverse animation
+    // &.is-active
+    //   &:hover
+    //     &::after
+    //       left: 50%
+    //       right: 50%

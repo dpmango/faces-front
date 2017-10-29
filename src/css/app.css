@@ -438,7 +438,7 @@ template {
 }
 
 .hamburger {
-  padding: 10px 10px;
+  padding: 10px 10px 6px 10px;
   margin-right: -10px;
   display: inline-block;
   cursor: pointer;
@@ -879,7 +879,7 @@ button:focus {
   transition: all 0.25s ease-in-out;
 }
 
-.btn-line:hover:after, .btn-line:focus:after {
+.btn-line:hover:after, .btn-line.is-active:after, .btn-line:focus:after {
   left: -5%;
   right: -5%;
 }
@@ -1185,6 +1185,30 @@ button:focus {
   right: 40px;
   z-index: 10;
   color: white;
+  background: transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: all .3s .3s ease;
+  -o-transition: all .3s .3s ease;
+  transition: all .3s .3s ease;
+}
+
+.topbar__nav {
+  margin-right: 25px;
+  font-size: 16px;
+}
+
+.grid .topbar, .s-page .topbar {
+  opacity: 1;
+  pointer-events: all;
 }
 
 .menu {

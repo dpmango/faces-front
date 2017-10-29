@@ -3,9 +3,7 @@ import api from '../constructor/Api'
 import CanvasGrid from '../constructor/CanvasGrid';
 
 import Topbar from './Topbar';
-import { Link } from 'react-router-dom';
-
-import { TweenMax } from 'gsap';
+// import { Link } from 'react-router-dom';
 
 export default class Grid extends React.Component {
   constructor() {
