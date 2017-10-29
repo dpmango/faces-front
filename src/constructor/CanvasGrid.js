@@ -60,7 +60,7 @@ export default class CanvasGrid {
     this.hoverCanvas();
     this.initializeGrid();
     this.fillGrid();
-    this.render();
+    // this.render();
   }
 
   xMovement = () => {

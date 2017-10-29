@@ -1,3 +1,66 @@
+.topbar
+  position: fixed
+  top: 30px
+  right: 40px
+  z-index: 10
+  color: white
+
+.menu
+  position: fixed 0
+  z-index: -1
+  display: flex
+  flex-direction: column
+  background: rgba(black, .8)
+  opacity: 0
+  pointer-events: none
+  transition: opacity .3s ease
+  &.is-active
+    opacity: 1
+    pointer-events: all
+
+  &__wrapper
+    position: relative
+    flex: 1 1 auto
+    display: flex
+    flex-direction: column
+
+  &__navigation
+    flex: 1 1 auto
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    text-align: center
+  &__li
+    // flex: 1 0 auto
+    margin-bottom: 6vh
+    transition: all .3s ease
+    opacity: 0
+    transform: translate3d(0,40px,0)
+    animation-duration: .3s
+    animation-timing-function: ease-out
+    animation-fill-mode: both
+    &:nth-child(1)
+      animation-delay: .2s
+    &:nth-child(2)
+      animation-delay: .4s
+    &:nth-child(3)
+      animation-delay: .6s
+    &:nth-child(4)
+      animation-delay: .8s
+
+// animation on active element
+.menu.is-active
+  .menu
+    &__li
+      animation-name: revealMenu
+
+@keyframes revealMenu
+  to
+    opacity: 1
+    transform: translate3d(0,0,0)
+
+
 .login a
   border: none
   position: absolute
