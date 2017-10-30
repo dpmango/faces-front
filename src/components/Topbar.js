@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { Howl } from 'howler';
 
-import Menu from './Menu'
+import Menu from './Menu';
+
+import logo from '../images/logo.png'
 
 export default class Topbar extends React.Component {
   constructor() {
@@ -45,6 +47,9 @@ export default class Topbar extends React.Component {
   render(){
     return(
       <div className="topbar">
+        <div className="topbar__logo">
+          <img src={logo} alt="logo"/>
+        </div>
         <div className="topbar__nav btn btn-line">
           <span>ПОДЕЛИТЬСЯ</span>
         </div>

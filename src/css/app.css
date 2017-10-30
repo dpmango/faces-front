@@ -809,7 +809,7 @@ ul li {
 body, html {
   background: white;
   color: #333;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Lazurski-Regular', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   min-width: 320px;
   max-width: 100%;
@@ -1183,6 +1183,7 @@ button:focus {
   position: fixed;
   top: 30px;
   right: 40px;
+  left: 40px;
   z-index: 10;
   color: white;
   background: transparent;
@@ -1204,6 +1205,15 @@ button:focus {
 .topbar__nav {
   margin-right: 25px;
   font-size: 16px;
+}
+
+.topbar__logo {
+  max-width: 140px;
+  margin-right: auto;
+}
+
+.topbar__logo img {
+  max-width: 100%;
 }
 
 .grid .topbar, .s-page .topbar {
