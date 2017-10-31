@@ -13,19 +13,33 @@
   pointer-events: none
   transition: all .3s .3s ease
   &__nav
-    margin-right: 25px
+    margin-right: 59px
     font-size: 16px
+  &__back-grid
+    opacity: 0
+    transition: all .3s ease
+
   &__logo
     max-width: 140px
     margin-right: auto
     img
       max-width: 100%
 
-.grid, .s-page
+.grid, .s-page, .profile
   .topbar
     opacity: 1
     // transform: translate3d(0,0,0)
     pointer-events: all
+
+.profile
+  .topbar
+    &__back-grid
+      opacity: 1
+
++r($desktop)
+  .topbar
+    &__nav
+      margin-right: 30px
 
 .menu
   position: fixed 0

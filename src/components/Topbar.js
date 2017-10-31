@@ -24,10 +24,21 @@ export default class Topbar extends React.Component {
   }
 
   componentDidMount(){
-    this.bgAudio.play();
-    this.setState({
-      audioPlaying: true
-    })
+    if ( !this.state.audioPlaying ){
+      this.bgAudio.play();
+      this.setState({
+        audioPlaying: true
+      })
+    }
+  }
+
+  componentWillUnmount(){
+    if ( this.state.audioPlaying ){
+      this.bgAudio.stop();
+      this.setState({
+        audioPlaying: false
+      })
+    }
   }
 
   audioControl = () => {
@@ -50,6 +61,9 @@ export default class Topbar extends React.Component {
         <div className="topbar__logo">
           <img src={logo} alt="logo"/>
         </div>
+        <Link className="topbar__nav topbar__back-grid btn btn-line" to="/grid">
+          <span>НАЗАД</span>
+        </Link>
         <div className="topbar__nav btn btn-line">
           <span>ПОДЕЛИТЬСЯ</span>
         </div>

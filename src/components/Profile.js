@@ -9,6 +9,8 @@ import TextFilter from '../filters/TextFilter';
 import DesandroFilter from '../filters/DesandroFilter';
 import UnaFilter from '../filters/UnaFilter';
 
+import Topbar from './Topbar';
+
 export default class Profile extends React.Component {
   constructor() {
     super();
@@ -33,7 +35,7 @@ export default class Profile extends React.Component {
 
   animateTransition = () => {
     TweenMax.to(this.imgWithFilter, 1, {opacity: 1, x: '0%', ease: Back.easeOut.config(1.7)});
-    TweenMax.to('.info-item', 1, {opacity: 1, y: '0%', delay: 0.5, ease: Back.easeOut.config(1.7)});
+    TweenMax.to('.profile-animation', 1, {opacity: 1, y: '0%', delay: 0.5, ease: Back.easeOut.config(1.7)});
   }
 
 
@@ -64,22 +66,20 @@ export default class Profile extends React.Component {
 
     return (
       <div className="profile">
-        <Link className="back-to-grid" to='/grid'>
-          НАЗАД
-        </Link>
+        <Topbar />
 
-        <div className="imgWithFilter" ref={(div) => this.imgWithFilter = div}>
-          {this.renderFilter(post.photo, post.filter)}
-        </div>
-
-        <div className="userInfo">
-          <div className="info-container">
-            <h1 className="info-item">{post.name}</h1>
-            <h3 className="info-item">{post.position.toUpperCase()}</h3>
-            <p className="info-item" dangerouslySetInnerHTML={{ __html: post.description }} />
-
+        <div className="profile__wrapper">
+          <div className="profile-image" ref={(div) => this.imgWithFilter = div}>
+            {this.renderFilter(post.photo, post.filter)}
           </div>
 
+          <div className="profile-info">
+            <div className="profile-info__fixed">
+              <h1 className="profile-info__name profile-animation">{post.name}</h1>
+              <h3 className="profile-info__position profile-animation">{post.position.toUpperCase()}</h3>
+            </div>
+            <p className="profile-info__content profile-animation" dangerouslySetInnerHTML={{ __html: post.description }} />
+          </div>
         </div>
       </div>
     );
