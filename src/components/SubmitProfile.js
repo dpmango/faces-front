@@ -1,6 +1,7 @@
 import React from 'react';
 import api from '../constructor/Api'
 import { TweenMax, TimelineLite, Elastic } from 'gsap';
+import CKEditor from "react-ckeditor-component";
 
 import UnaFilter from '../filters/UnaFilter';
 import sprite from '../images/sprite.svg';
@@ -12,11 +13,13 @@ export default class submitProfile extends React.Component {
     super();
 
     this.state = {
+      content: 'content',
       loading: true,
       author_social: "",
       author_email: "",
       photo: null
     }
+    this.updateContent = this.updateContent.bind(this);
   }
 
   componentWillMount() {
@@ -24,6 +27,10 @@ export default class submitProfile extends React.Component {
       loading: false
     });
     this.animateForm();
+  }
+
+  componentDidUpdate() {
+    // console.log(this.state.content.editor.getData())
   }
 
   changeImage = (e) => {
@@ -87,6 +94,12 @@ export default class submitProfile extends React.Component {
     TweenMax.from('.submit__inner', 1, {x: '200%', delay: 0.3, ease: Elastic.easeOut.config(0.2, 0.3)})
   }
 
+  updateContent(newContent) {
+    this.setState({
+      content: newContent
+    })
+  }
+
   render() {
     if (this.state.loading) {
       return(
@@ -127,7 +140,14 @@ export default class submitProfile extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="description">Описание</label>
-                <textarea type="text" id="description" name="description" required />
+                {/* <textarea type="text" id="description" name="description" required /> */}
+                <CKEditor
+                  activeClass="p10"
+                  content={this.state.content}
+                  events={{
+                    "change": this.updateContent
+                  }}
+                />
               </div>
 
               <div className="submit__inner-btn">

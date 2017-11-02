@@ -1401,11 +1401,10 @@ button:focus {
 .submit__image {
   position: relative;
   -webkit-box-flex: 0;
-  -webkit-flex: 0 1 50%;
-      -ms-flex: 0 1 50%;
-          flex: 0 1 50%;
-  width: 50%;
-  padding: 0 20px;
+  -webkit-flex: 0 0 400px;
+      -ms-flex: 0 0 400px;
+          flex: 0 0 400px;
+  max-width: 400px;
 }
 
 .submit__image-preview {
@@ -1501,13 +1500,12 @@ button:focus {
 }
 
 .submit__inner {
-  max-width: 350px;
   -webkit-box-flex: 0;
-  -webkit-flex: 0 1 50%;
-      -ms-flex: 0 1 50%;
-          flex: 0 1 50%;
-  width: 50%;
-  padding: 0 20px;
+  -webkit-flex: 0 1 auto;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+  width: 100%;
+  padding: 0 0px 0 40px;
 }
 
 .submit__inner-btn {
@@ -1549,6 +1547,10 @@ button:focus {
   border: 1px dotted #fda737;
   color: #FFF;
   background: #000;
+}
+
+.form-group input {
+  max-width: 350px;
 }
 
 @media only screen and (max-width: 992px) {
