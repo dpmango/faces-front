@@ -7,7 +7,7 @@ import { createStore } from 'redux';
 import Intro from './components/Intro';
 import Grid from './components/Grid';
 import Profile from './components/Profile';
-import ProfileForm from './components/ProfileForm';
+import SubmitProfile from './components/SubmitProfile';
 import Page from './components/Page';
 
 import './css/app.css';
@@ -22,9 +22,9 @@ class Root extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Intro} />
-            <Route path="/form" component={ProfileForm} />
             <Route exact path="/grid" component={Grid} />
             <Route path="/grid/:uuid" component={Profile} />
+            <Route path="/form" component={SubmitProfile} />
             <Route path="/:pagename" component={Page} />
           </Switch>
         </BrowserRouter>

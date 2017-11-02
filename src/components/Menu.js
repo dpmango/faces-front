@@ -38,6 +38,11 @@ export default class Menu extends React.Component {
                 </Link>
               </div>
               <div className="menu__li">
+                <Link className="btn btn-line" to='/form'>
+                  <span>#ДЕЛИСЬВЗГЛЯДОМ</span>
+                </Link>
+              </div>
+              <div className="menu__li">
                 <Link className="btn btn-line" to='/about'>
                   <span>О Проекте</span>
                 </Link>

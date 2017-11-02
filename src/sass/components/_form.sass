@@ -1,0 +1,116 @@
+.submit
+  max-width: 1240px
+  margin: 0 auto
+  &__wrapper
+    position: relative
+    display: flex
+    align-items: center
+    min-height: 500px
+    height: 100vh
+    max-height: 100vh
+    padding: 70px 40px 20px 40px
+    color: white
+  &__image
+    position: relative
+    flex: 0 1 50%
+    width: 50%
+    padding: 0 20px
+    &-preview
+      display: block
+      position: relative
+      overflow: hidden
+      height: 300px
+      max-width: 400px
+      margin-left: auto
+      background: rgba(white, .05)
+      border-radius: 20px
+      border: 2px dashed rgba(white, .3)
+      cursor: pointer
+      transition: all $transitionSpeed $ease
+      &:hover
+        border-color: white
+      img
+        width: 100%
+        height: 100%
+        display: block
+        margin: 0 auto
+        object-fit: cover
+        opacity: 0
+        transition: opacity $transitionSpeed $ease
+      &.is-chosen
+        img
+          opacity: 1
+        .submit__image-placeholder
+          opacity: 0
+
+    &-placeholder
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate3d(-50%,-50%,0)
+      text-align: center
+      transition: opacity $transitionSpeed $ease
+      .ico
+        font-size: 50px
+      span
+        margin-top: 10px
+        display: block
+        text-align: center
+        font-size: 20px
+    &-file-input
+      position: absolute
+      top: 0
+      left: 0
+      opacity: 0
+      pointer-events: none
+      width: 0.1em
+      height: 0.1em
+
+  &__inner
+    max-width: 350px
+    flex: 0 1 50%
+    width: 50%
+    padding: 0 20px
+    &-btn
+      margin-top: 30px
+      text-align: center
+
+.form-group
+  position: relative
+  display: block
+  width: 100%
+  margin-bottom: 15px
+  label
+    display: block
+    margin-bottom: 8px
+    font-size: 13px
+    color: rgba(white, .6)
+    font-family: 'Open Sans', 'Roboto', sans-serif
+  input, textarea
+    display: block
+    width: 100%
+    color: white
+    border-radius: 4px
+    padding: 10px
+    background: none
+    border: 1px solid #6D6875
+    resize: vertical
+    transition: all $transitionSpeed $ease
+    &:focus
+      border: 1px dotted $colorYellow
+      color: #FFF
+      background: #000
+
+
++r($desktop)
+  .submit
+    display: block
+    &__image
+      width: 100%
+
+    &__inner
+      width: 100%

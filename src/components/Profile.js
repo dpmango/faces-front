@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { TweenMax, Back } from 'gsap';
 
-import CircleFilter from '../filters/CircleFilter';
-import TextFilter from '../filters/TextFilter';
-import DesandroFilter from '../filters/DesandroFilter';
 import UnaFilter from '../filters/UnaFilter';
 
 import Topbar from './Topbar';
@@ -39,20 +36,8 @@ export default class Profile extends React.Component {
   }
 
 
-  renderFilter = (photo, filter) => {
+  renderFilter = (photo) => {
     return <UnaFilter photo={photo} />
-    // if (filter === 'circle') {
-    //   return <CircleFilter photo={photo} />
-    // }
-    // if (filter === 'text') {
-    //   return <TextFilter photo={photo} text='взгляд!' />
-    // }
-    // if (filter === 'desandro') {
-    //   return <DesandroFilter photo={photo} />
-    // }
-    // if (filter === 'una') {
-    //   return <UnaFilter photo={photo} />
-    // }
   }
 
   render() {
@@ -70,7 +55,7 @@ export default class Profile extends React.Component {
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>
-            {this.renderFilter(post.photo, post.filter)}
+            {this.renderFilter(post.photo)}
           </div>
 
           <div className="profile-info">

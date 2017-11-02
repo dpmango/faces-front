@@ -6,8 +6,12 @@ const api = axios.create({
   baseURL: BACKEND_URL,
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
   }
 });
+
+// headers -- 'X-CSRF-Token': token
+// credentials: 'same-origin'
 
 export default api;
