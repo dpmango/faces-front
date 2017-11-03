@@ -1391,9 +1391,7 @@ button:focus {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: 500px;
-  height: 100vh;
-  max-height: 100vh;
+  min-height: 100vh;
   padding: 70px 40px 20px 40px;
   color: white;
 }
@@ -1412,8 +1410,6 @@ button:focus {
   position: relative;
   overflow: hidden;
   height: 300px;
-  max-width: 400px;
-  margin-left: auto;
   background: rgba(255, 255, 255, 0.05);
   -webkit-border-radius: 20px;
           border-radius: 20px;
@@ -1554,14 +1550,32 @@ button:focus {
 }
 
 @media only screen and (max-width: 992px) {
-  .submit {
-    display: block;
+  .submit__wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
   }
   .submit__image {
+    margin-top: 70px;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     width: 100%;
   }
+  .submit__image-preview {
+    height: 220px;
+  }
   .submit__inner {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+        -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
     width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
   }
 }
 

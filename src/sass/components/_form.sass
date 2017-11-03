@@ -5,9 +5,7 @@
     position: relative
     display: flex
     align-items: center
-    min-height: 500px
-    height: 100vh
-    max-height: 100vh
+    min-height: 100vh
     padding: 70px 40px 20px 40px
     color: white
   &__image
@@ -19,8 +17,6 @@
       position: relative
       overflow: hidden
       height: 300px
-      max-width: 400px
-      margin-left: auto
       background: rgba(white, .05)
       border-radius: 20px
       border: 2px dashed rgba(white, .3)
@@ -109,9 +105,17 @@
 
 +r($desktop)
   .submit
-    display: block
+    &__wrapper
+      flex-direction: column
     &__image
+      margin-top: 70px
+      flex: 0 0 auto
       width: 100%
+      &-preview
+        height: 220px
 
     &__inner
+      flex: 0 0 auto
       width: 100%
+      margin-top: 50px
+      margin-bottom: 50px
