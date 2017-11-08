@@ -10,7 +10,8 @@ export default class Grid extends React.Component {
     super();
 
     this.state = {
-      transitioning: false
+      transitioning: false,
+      activeFilter: 'universe'
     }
   }
 
@@ -19,7 +20,7 @@ export default class Grid extends React.Component {
       data: {},
     }).then((res) => {
       console.log('got API responce', res.data)
-      this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard);
+      this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
     });
   }
 
@@ -37,10 +38,28 @@ export default class Grid extends React.Component {
     }, 500);
   }
 
+  setFilter = (filter) => {
+    this.setState({
+      activeFilter: filter
+    }, () => {
+      api.get('posts', {
+        data: {},
+      }).then((res) => {
+        this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+      });
+    });
+
+  }
+
   render() {
     return (
       <div className="grid">
         <Topbar />
+        <div className="grid-filter">
+          <span className={`btn btn-line ${this.state.activeFilter === "universe" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'universe')} >Universe</span>
+          <span className={`btn btn-line ${this.state.activeFilter === "hero" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'hero')} >Герои</span>
+          <span className={`btn btn-line ${this.state.activeFilter === "sharevision" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'sharevision')} >#ДЕЛИСЬВЗГЛЯДОМ</span>
+        </div>
         {/* we can set filter here -- moon or _1977 (css only) */}
         <div className="grid-container inkwell" ref={(div) => this.gridContainer = div}></div>
         <div className={`grid-transition ${this.state.transitioning ? 'active' : ''} `}></div>

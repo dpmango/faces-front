@@ -997,6 +997,31 @@ button:focus {
   height: 200vw;
 }
 
+.grid-filter {
+  position: fixed;
+  bottom: 20px;
+  right: 55px;
+  z-index: 10;
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+  float: right;
+  -webkit-transform-origin: right top 0;
+      -ms-transform-origin: right top 0;
+          transform-origin: right top 0;
+  color: white;
+}
+
+.grid-filter span {
+  font-size: 14px;
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.grid-filter span:last-child {
+  margin-right: 0;
+}
+
 .profile {
   max-width: 1240px;
   margin: 0 auto;

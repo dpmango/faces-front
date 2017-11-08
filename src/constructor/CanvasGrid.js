@@ -6,14 +6,31 @@ import photoUrl from './photoUrl';
 import click from './click';
 
 export default class CanvasGrid {
-  constructor(gridContainer, posts, redirectToProfile) {
+  constructor(gridContainer, posts, redirectToProfile, filter) {
     this.gridContainer = gridContainer;
     // don't mutate the state
     // this.posts = Object.keys(posts).map((key) => {
     //   posts[key].id = key;
     //   return posts[key];
     // });
-    this.posts = posts
+
+    this.posts = posts.filter((post,key) => {
+      if ( filter === "hero" ){
+        if ( posts[key].category === "hero" ){
+          return posts[key];
+        }
+      } else if ( filter === "sharevision"){
+        if ( posts[key].category === "sharevision" ){
+          return posts[key];
+        }
+      }
+      else{
+        return posts[key];
+      }
+    });
+
+    console.log(this.posts)
+    // this.posts = posts
 
     this.redirectToProfile = redirectToProfile;
 
