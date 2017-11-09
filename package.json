@@ -59,8 +59,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "surge": "surge --domain hd-visions.surge.sh --project ./build",
+    "surge": "mv build/index.html build/200.html && surge --domain hd-visions.surge.sh --project ./build",
     "developer": "concurrently --kill-others \"gulp\" \"yarn start\"",
-    "builder": "concurrently --kill-others \"gulp build --production\" \"yarn build\""
+    "builder": "gulp build --production && yarn build && yarn surge"
   }
 }
