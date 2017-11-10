@@ -1,6 +1,6 @@
 import Hammer from 'hammerjs';
 import { TweenMax } from 'gsap';
-import {throttle} from 'lodash';
+import {throttle, debounce} from 'lodash';
 
 import photoUrl from './photoUrl';
 import click from './clickSound';
@@ -280,15 +280,23 @@ export default class CanvasGrid {
         this.delta.x = e.deltaX;
         this.delta.y = e.deltaY;
 
-        if (e.isFinal) {
-          this.offset.x += this.delta.x;
-          this.offset.y += this.delta.y;
-          this.delta.x = 0;
-          this.delta.y = 0;
+        // if (e.isFinal) {
+        //   this.offset.x += this.delta.x;
+        //   this.offset.y += this.delta.y;
+        //   this.delta.x = 0;
+        //   this.delta.y = 0;
+        //
+        //   // this.initializeGrid();
+        //   // this.fillGrid();
+        // }
 
+        this.offset.x += this.delta.x;
+        this.offset.y += this.delta.y;
+
+        throttle( () => {
           this.initializeGrid();
           this.fillGrid();
-        }
+        }, 200 );
       }
 
       if(e.type === 'tap' || e.type === 'press') {
@@ -332,6 +340,12 @@ export default class CanvasGrid {
     // debbug error when hovered blank image
     // (not loaded or canvas resizing?)
 
+    if ( currImage !== this.selectedImage ){
+      setTimeout(() => {
+        hover.play();
+      }, 50)
+    }
+
     if ( currImage == this.selectedImage ){
       TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});
     } else {
@@ -342,7 +356,7 @@ export default class CanvasGrid {
   }
 
   hoverCanvas = () => {
-    this.canvas.addEventListener('mousemove', throttle(this.getHoveredGrid, 100, { 'trailing': false }) )
+    this.canvas.addEventListener('mousemove', throttle(this.getHoveredGrid, 100, { 'trailing': false }) );
   }
 
 }

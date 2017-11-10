@@ -1,8 +1,8 @@
 import { Howl } from 'howler';
 
-const click = new Howl({
-  src: ['/clickEffect.mp3'],
-  volume: 0.1
+const hover = new Howl({
+  src: ['/hover.mp3'],
+  volume: 1
 });
 
-export default click;
+export default hover;

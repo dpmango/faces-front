@@ -41,7 +41,7 @@ export default class Topbar extends React.Component {
 
   componentDidMount(){
     if ( !this.state.audioPlaying ){
-      this.bgAudio.play();
+      // this.bgAudio.play();
       this.setState({
         audioPlaying: true
       })
