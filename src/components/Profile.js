@@ -51,7 +51,7 @@ export default class Profile extends React.Component {
 
     return (
       <div className="profile">
-        <Topbar />
+        <Topbar shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>

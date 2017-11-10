@@ -1048,7 +1048,9 @@ button:focus {
 }
 
 .grid-filter span {
-  font-size: 14px;
+  font-size: 15px;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
   display: inline-block;
   margin-right: 40px;
 }
@@ -1232,6 +1234,45 @@ button:focus {
 
 .topbar__logo img {
   max-width: 100%;
+}
+
+.topbar__share {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  text-align: center;
+}
+
+.topbar__share-el {
+  font-size: 18px;
+  margin-bottom: 15px;
+  opacity: 0;
+  -webkit-transform: translate3d(0, 15px, 0);
+          transform: translate3d(0, 15px, 0);
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.topbar__share-el:nth-child(2) {
+  -webkit-transition-delay: .25s;
+       -o-transition-delay: .25s;
+          transition-delay: .25s;
+}
+
+.topbar__share-el:nth-child(3) {
+  -webkit-transition-delay: .25s;
+       -o-transition-delay: .25s;
+          transition-delay: .25s;
+}
+
+.topbar__share.is-active .topbar__share-el {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 .grid .topbar, .s-page .topbar, .profile .topbar, .submit .topbar {
