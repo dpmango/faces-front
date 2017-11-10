@@ -1,16 +1,31 @@
 .intro
   position: relative
+  z-index: 1
+  overflow: hidden
   width: 100%
   height: 100vh
   margin: 0 auto
-  padding: 0 40px
+  padding: 50px 40px 50px 40px
   display: flex
   justify-content: center
   align-items: center
   flex-direction: column
   color: white
 
+  &__bg
+    position: absolute
+    top: 0
+    left: 0
+    z-index: 1
+    width: 100%
+    transform: scale(1.6)
+    opacity: 1
+    // transition: opacity .5s
+    min-height: 100%
+
   &__wrapper
+    position: relative
+    z-index: 2
     flex: 1 1 auto
     display: flex
     flex-direction: column
@@ -21,6 +36,8 @@
   &__logo
     max-width: 200px
     margin-bottom: 40px
+    opacity: 0
+    transform: translate3d(0,20px,0)
     img
       max-width: 100%
 
@@ -29,8 +46,6 @@
     max-width: 800px
     margin: 0 auto
     font-family: 'Open Sans', sans-serif
-    // animate with twinmax
-    opacity: 0
 
   &__control
     width: 33.3%
@@ -38,12 +53,21 @@
     padding: 20px
     text-align: center
     font-size: 16px
-    line-height: 1.5
+    line-height: 1.7
+    opacity: 0
+    transform: translate3d(0,20px,0)
+    .ico
+      color: rgba(white, .6)
+      width: 100%
+      display: inline-block
+      font-size: 35px
+      margin: 20px auto 0 auto
 
   &__cta
     position: absolute
     bottom: 5vh
     left: 50%
-    transform: translateX(-50%)
+    z-index: 2
+    transform: translate3d(-50%, -35px,0)
     // animate with twinmax
     opacity: 0
