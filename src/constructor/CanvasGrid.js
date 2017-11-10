@@ -3,7 +3,8 @@ import { TweenMax } from 'gsap';
 import {throttle} from 'lodash';
 
 import photoUrl from './photoUrl';
-import click from './click';
+import click from './clickSound';
+import hover from './hoverSound';
 
 export default class CanvasGrid {
   constructor(gridContainer, posts, redirectToProfile, filter) {
@@ -269,9 +270,7 @@ export default class CanvasGrid {
   dragCanvas = () => {
 
     const hammer = new Hammer(this.canvas);
-    // hammer.defaults = {
-    //   domEvents: true
-    // }
+
     hammer.get('pan').set({
       direction: Hammer.DIRECTION_ALL
     });
@@ -298,10 +297,30 @@ export default class CanvasGrid {
         const col = Math.floor((e.srcEvent.clientX - this.xMovement()) / this.squareSize);
 
         const gridImage = this.grid[row][col];
-        console.log('redirecting to profile', gridImage)
         this.redirectToProfile(gridImage.post.id);
       }
     });
+
+    this.canvas.addEventListener('wheel', (e) => {
+      // invert delta
+      let delta = e.deltaY
+      if ( e.deltaY < 0 ){
+        delta = Math.abs(e.deltaY)
+      } else if ( e.deltaY > 0){
+        delta = -Math.abs(e.deltaY);
+      }
+
+      this.delta.y = delta;
+      this.offset.y += this.delta.y;
+      this.delta.y = 0;
+
+      e.preventDefault();
+    })
+
+    this.canvas.addEventListener('wheel', throttle( () => {
+      this.initializeGrid();
+      this.fillGrid();
+    }, 200 ))
   }
 
   getHoveredGrid = (e) => {
@@ -323,8 +342,7 @@ export default class CanvasGrid {
   }
 
   hoverCanvas = () => {
-    let throttled = throttle(this.getHoveredGrid, 100, { 'trailing': false });
-    this.canvas.addEventListener('mousemove', throttled)
+    this.canvas.addEventListener('mousemove', throttle(this.getHoveredGrid, 100, { 'trailing': false }) )
   }
 
 }
