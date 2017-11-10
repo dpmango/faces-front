@@ -275,28 +275,17 @@ export default class CanvasGrid {
       direction: Hammer.DIRECTION_ALL
     });
 
-    hammer.on('panleft panright panup pandown tap press', (e) => {
+    hammer.on('panleft panright panup pandown panend tap press', (e) => {
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
         this.delta.x = e.deltaX;
         this.delta.y = e.deltaY;
+      }
 
-        // if (e.isFinal) {
-        //   this.offset.x += this.delta.x;
-        //   this.offset.y += this.delta.y;
-        //   this.delta.x = 0;
-        //   this.delta.y = 0;
-        //
-        //   // this.initializeGrid();
-        //   // this.fillGrid();
-        // }
-
+      if (e.type === "panend"){
         this.offset.x += this.delta.x;
         this.offset.y += this.delta.y;
-
-        throttle( () => {
-          this.initializeGrid();
-          this.fillGrid();
-        }, 200 );
+        this.delta.x = 0;
+        this.delta.y = 0;
       }
 
       if(e.type === 'tap' || e.type === 'press') {
@@ -308,6 +297,11 @@ export default class CanvasGrid {
         this.redirectToProfile(gridImage.post.id);
       }
     });
+
+    hammer.on('panleft panright panup pandown', throttle( (e) => {
+      this.initializeGrid();
+      this.fillGrid();
+    }, 300));
 
     this.canvas.addEventListener('wheel', (e) => {
       // invert delta
