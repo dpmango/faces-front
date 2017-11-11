@@ -43,9 +43,14 @@ export default class Grid extends React.Component {
       activeFilter: filter
     }, () => {
       api.get('posts', {
-        data: {},
+        params: {
+          filter: filter
+        },
       }).then((res) => {
-        this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+        if ( res.data.length > 0 ){
+          this.canvasGrid.removeGrid();
+          this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+        }
       });
     });
 

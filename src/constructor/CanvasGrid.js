@@ -9,12 +9,8 @@ import hover from './hoverSound';
 export default class CanvasGrid {
   constructor(gridContainer, posts, redirectToProfile, filter) {
     this.gridContainer = gridContainer;
-    // don't mutate the state
-    // this.posts = Object.keys(posts).map((key) => {
-    //   posts[key].id = key;
-    //   return posts[key];
-    // });
 
+    // api is not selecting by category - this might be not necassary
     this.posts = posts.filter((post,key) => {
       if ( filter === "hero" ){
         if ( posts[key].category === "hero" ){
@@ -29,9 +25,6 @@ export default class CanvasGrid {
         return posts[key];
       }
     });
-
-    console.log(this.posts)
-    // this.posts = posts
 
     this.redirectToProfile = redirectToProfile;
 
@@ -75,6 +68,7 @@ export default class CanvasGrid {
     this.selectedImage = {};
     this.gridImages = [];
     this.dragCanvas();
+    this.scrollCanvas();
     this.hoverCanvas();
     this.initializeGrid();
     this.fillGrid();
@@ -218,6 +212,9 @@ export default class CanvasGrid {
   stopGrid = () => {
     this.gridStatus = 'inactive';
   }
+  removeGrid = () => {
+    this.gridContainer.removeChild(this.canvas);
+  }
 
   // Simulating background cover so that the images are centered to cover the square and they aren't stretched
   // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
@@ -302,7 +299,9 @@ export default class CanvasGrid {
       this.initializeGrid();
       this.fillGrid();
     }, 300));
+  }
 
+  scrollCanvas = () => {
     this.canvas.addEventListener('wheel', (e) => {
       // invert delta
       let delta = e.deltaY
