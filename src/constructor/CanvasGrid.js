@@ -318,32 +318,32 @@ export default class CanvasGrid {
     }, 200 ))
   }
 
-  getHoveredGrid = (e) => {
-    const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
-    const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
-
-    let currImage = this.grid[row][col];
-
-    // debbug error when hovered blank image
-    // (not loaded or canvas resizing?)
-
-    if ( currImage !== this.selectedImage ){
-      setTimeout(() => {
-        hover.play();
-      }, 50)
-    }
-
-    if ( currImage == this.selectedImage ){
-      TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});
-    } else {
-      // update global selected image only if changed
-      TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
-      this.selectedImage = currImage;
-    }
-  }
-
   hoverCanvas = () => {
-    this.canvas.addEventListener('mousemove', throttle(this.getHoveredGrid, 100, { 'trailing': false }) );
+    this.canvas.addEventListener('mousemove', throttle( (e) => {
+
+      const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
+      const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
+
+      let currImage = this.grid[row][col];
+
+      // debbug error when hovered blank image
+      // (not loaded or canvas resizing?)
+
+      if ( currImage !== this.selectedImage ){
+        setTimeout(() => {
+          hover.play();
+        }, 50)
+      }
+
+      if ( currImage == this.selectedImage ){
+        TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});
+      } else {
+        // update global selected image only if changed
+        TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+        this.selectedImage = currImage;
+      }
+
+    }, 100, { 'trailing': false }) );
   }
 
   resizeCanvas = () => {
