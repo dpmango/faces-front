@@ -69,6 +69,7 @@ export default class CanvasGrid {
     this.gridImages = [];
     this.dragCanvas();
     this.scrollCanvas();
+    this.resizeCanvas();
     this.hoverCanvas();
     this.initializeGrid();
     this.fillGrid();
@@ -209,13 +210,6 @@ export default class CanvasGrid {
     });
   }
 
-  stopGrid = () => {
-    this.gridStatus = 'inactive';
-  }
-  removeGrid = () => {
-    this.gridContainer.removeChild(this.canvas);
-  }
-
   // Simulating background cover so that the images are centered to cover the square and they aren't stretched
   // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
   // drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
@@ -351,5 +345,28 @@ export default class CanvasGrid {
   hoverCanvas = () => {
     this.canvas.addEventListener('mousemove', throttle(this.getHoveredGrid, 100, { 'trailing': false }) );
   }
+
+  resizeCanvas = () => {
+    window.addEventListener('resize', debounce( (e) => {
+
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+
+      this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
+      this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
+
+      this.initializeGrid();
+      this.fillGrid();
+
+    }, 300 ))
+  }
+
+  stopGrid = () => {
+    this.gridStatus = 'inactive';
+  }
+  removeGrid = () => {
+    this.gridContainer.removeChild(this.canvas);
+  }
+
 
 }
