@@ -276,6 +276,9 @@ export default class CanvasGrid {
       direction: Hammer.DIRECTION_ALL
     });
 
+    hammer.get('tap').set({
+      touchAction: 'manipulation'
+    })
 
     hammer.on('panleft panright panup pandown panend tap press', (e) => {
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
@@ -298,6 +301,8 @@ export default class CanvasGrid {
         const gridImage = this.grid[row][col];
         this.redirectToProfile(gridImage.post.id);
       }
+
+      e.preventDefault();
     });
 
     hammer.on('panleft panright panup pandown', throttle( (e) => {
