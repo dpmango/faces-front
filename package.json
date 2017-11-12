@@ -53,7 +53,8 @@
     "require-dir": "^0.3.2",
     "run-sequence": "^2.2.0",
     "through2": "^2.0.3",
-    "tinycolor2": "^1.4.1"
+    "tinycolor2": "^1.4.1",
+    "viewport-units-buggyfill": "^0.6.2"
   },
   "scripts": {
     "start": "react-scripts start",

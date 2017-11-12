@@ -15,6 +15,11 @@ import './css/app.css';
 import appStore from './reducers';
 let store = createStore(appStore)
 
+require('viewport-units-buggyfill').init({
+  force: true,
+  refreshDebounceWait: 250
+});
+
 class Root extends React.Component {
   render(){
     return (

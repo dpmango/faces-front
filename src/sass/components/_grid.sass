@@ -23,14 +23,20 @@
     position: fixed
     bottom: 20px
     right: 55px
-    z-index: 10
+    z-index: 9
+    display: flex
+    align-items: center
     transform: rotate(90deg)
     float: right
     transform-origin: right top 0
     color: white
+    transition: transform .3s ease
     span
+      flex: 0 0 auto
       font-size: 15px
       font-family: 'Open Sans', sans-serif
+      font-weight: 600
+      letter-spacing: 0.1em
       text-transform: uppercase
       display: inline-block
       margin-right: 40px
@@ -38,3 +44,17 @@
 
       &:last-child
         margin-right: 0
+
++r($mobile)
+  .grid
+    &-filter
+      right: 35px
+      span
+        font-size: 14px
+        margin-right: 30px
+        &:last-child
+          margin-right: 0
+
++rh(600)
+  .grid-filter
+    transform: rotate(0)

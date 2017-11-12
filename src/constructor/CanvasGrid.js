@@ -10,7 +10,7 @@ export default class CanvasGrid {
   constructor(gridContainer, posts, redirectToProfile, filter) {
     this.gridContainer = gridContainer;
 
-    // api is not selecting by category - this might be not necassary
+    // api is now selecting by category - this might be not necassary
     this.posts = posts.filter((post,key) => {
       if ( filter === "hero" ){
         if ( posts[key].category === "hero" ){
@@ -46,14 +46,10 @@ export default class CanvasGrid {
       y: 0
     };
 
-    if ( window.innerWidth < 992 ){
-      this.squareSize = 175;
-    } else {
-      this.squareSize = 225;
-    }
-
-    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
-    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
+    // to be set in sizeCanvas()
+    this.squareSize = 0;
+    this.totalCols = 0;
+    this.totalRows = 0;
 
     this.grid = {};
 
@@ -67,6 +63,7 @@ export default class CanvasGrid {
     this.currentImage = 0;
     this.selectedImage = {};
     this.gridImages = [];
+    this.sizeCanvas();
     this.dragCanvas();
     this.scrollCanvas();
     this.resizeCanvas();
@@ -82,6 +79,19 @@ export default class CanvasGrid {
 
   yMovement = () => {
     return this.offset.y + this.delta.y;
+  }
+
+  sizeCanvas = () => {
+    if ( window.innerWidth < 992 ){
+      this.squareSize = 175;
+    } else if ( window.innerWidth < 568 ) {
+      this.squareSize = 140;
+    } else {
+      this.squareSize = 225;
+    }
+
+    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
+    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
   }
 
   initializeGrid = () => {
@@ -352,9 +362,7 @@ export default class CanvasGrid {
       this.canvas.width = window.innerWidth;
       this.canvas.height = window.innerHeight;
 
-      this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
-      this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
-
+      this.sizeCanvas();
       this.initializeGrid();
       this.fillGrid();
 

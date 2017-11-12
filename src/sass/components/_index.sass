@@ -20,6 +20,7 @@
     transition: all .3s ease
 
   &__logo
+    flex: 0 0 auto
     max-width: 140px
     margin-right: auto
     img
@@ -62,6 +63,25 @@
   .topbar
     &__nav
       margin-right: 30px
+
++r($tablet)
+  .topbar
+    &__nav
+      display: none
+      margin-right: 20px
+      &.topbar__back-grid
+        display: inline-block
+
++r($mobile)
+  .topbar
+    top: 20px
+    right: 20px
+    left: 20px
+
++r(350)
+  .topbar
+    &__logo
+      max-width: 130px
 
 .menu
   position: fixed 0
