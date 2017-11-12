@@ -98,17 +98,19 @@
 
   &__wrapper
     position: relative
-    flex: 1 1 auto
+    flex: 1 0 auto
     display: flex
     flex-direction: column
+    padding: 100px 20px 20px 20px
 
   &__navigation
-    flex: 1 1 auto
+    flex: 1 0 auto
     display: flex
     flex-direction: column
     justify-content: center
     align-items: center
     text-align: center
+    overflow-y: auto
   &__li
     // flex: 1 0 auto
     margin-bottom: 6vh
@@ -138,17 +140,5 @@
     opacity: 1
     transform: translate3d(0,0,0)
 
-
-.login a
-  border: none
-  position: absolute
-  top: 3%
-  right: 2%
-  background-color: transparent
-  font-size: 1.2rem
-  transition: color 5s ease
-  &:hover
-    color: #CC208E
-    background-image: none
-    background-color: transparent
-    box-shadow: none
++r($mobile)
+  .menu

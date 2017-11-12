@@ -16,7 +16,7 @@ import appStore from './reducers';
 let store = createStore(appStore)
 
 require('viewport-units-buggyfill').init({
-  force: true,
+  // force: true,
   refreshDebounceWait: 250
 });
 

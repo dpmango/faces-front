@@ -276,6 +276,7 @@ export default class CanvasGrid {
       direction: Hammer.DIRECTION_ALL
     });
 
+
     hammer.on('panleft panright panup pandown panend tap press', (e) => {
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
         this.delta.x = e.deltaX;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import {ShareButtons} from 'react-share';
 import { Howl } from 'howler';
 
-import Menu from './Menu';
+// import Menu from './Menu';
 
 import logo from '../images/logo.png'
 
@@ -83,6 +83,15 @@ export default class Topbar extends React.Component {
     }
   }
 
+  toggleMenu = () => {
+    // store.dispatch({
+    //   type: "TOGGLE_MENU"
+    // })
+    this.setState({
+      opened: !this.state.opened ? true : false
+    });
+  }
+
   render(){
 
     let share = {
@@ -118,7 +127,41 @@ export default class Topbar extends React.Component {
         <div className={`topbar__nav btn btn-line ${this.state.audioPlaying ? '' : 'is-active'} `} onClick={this.audioControl.bind(this)}>
           <span>ЗВУК</span>
         </div>
-        <Menu />
+
+        {/* menu */}
+
+        <div className={`hamburger hamburger--squeeze ${this.state.opened ? 'is-active' : ''} `} onClick={this.toggleMenu.bind(this)}>
+          <span className="hamburger-box">
+            <span className="hamburger-inner"></span>
+          </span>
+        </div>
+
+        <div className={`menu ${this.state.opened ? 'is-active' : ''} `}>
+          <div className="menu__wrapper">
+            <div className="menu__navigation">
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/grid'>
+                  <span>UNIVERSE</span>
+                </Link>
+              </div>
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/form'>
+                  <span>#ДЕЛИСЬВЗГЛЯДОМ</span>
+                </Link>
+              </div>
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/about'>
+                  <span>О Проекте</span>
+                </Link>
+              </div>
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/brand'>
+                  <span>О Бренде</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

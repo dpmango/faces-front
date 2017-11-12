@@ -7,7 +7,7 @@
     min-height: 500px
     height: 100vh
     max-height: 100vh
-    padding: 70px 40px 20px 40px
+    padding: 100px 40px 20px 40px
 
   &-image
     position: relative
@@ -66,20 +66,43 @@
     opacity: 0
     transform: translateY(20%)
 
-+r($desktop)
++r($tablet)
   .profile
-    display: block
+    &__wrapper
+      flex-direction: column
+      min-height: 1px
+      max-height: auto
 
-  .profile-image
-    margin-top: 150px
-    width: 100%
-    height: auto
-    canvas
-      display: block
-      width: 300px
-      margin: 0 auto
+    &-image
+      flex: 0 0 auto
+      margin-top: 50px
+      width: 100%
+      height: auto
+      max-height: 400px
+      // canvas
+      //   display: block
+      //   width: 300px
+      //   margin: 0 auto
 
-  .profile-info
-    width: 100%
-    margin: 15px
-    margin-top: 80px
+    &-info
+      flex: 0 0 auto
+      width: 100%
+      &__name
+        font-size: 50px
+        line-height: 1.1
+        margin: -28px 0px 20px -0px
+      &__position
+        margin: 15px 0px 0px 40px
+        font-size: 16px
+      &__content
+        flex: 0 0 auto
+        overflow-y: hidden
+        margin-left: 0px
+        margin-bottom: 50px
+        p
+          font-size: 16px
+
++r($mobile)
+  .profile
+    &__wrapper
+      padding: 80px 20px 20px 20px

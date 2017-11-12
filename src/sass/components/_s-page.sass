@@ -6,12 +6,35 @@
   &__content
     margin: auto
     width: 100%
-    padding: 80px 40px 40px 40px
+    max-width: 800px
+    padding: 100px 40px 40px 40px
     display: flex
     flex-direction: column
+    transition: all .3s ease
     p
       font-size: 20px
       line-height: 1.7
   &__title
     font-size: 36px
     margin: .7em 0
+
++r($tablet)
+  .s-page
+    &__content
+      p
+        font-size: 17px
+    &__title
+      font-size: 32px
+
++r($mobile)
+  .s-page
+    &__content
+      padding: 80px 20px 40px 20px
+
++r(374)
+  .s-page
+    &__content
+      p
+        font-size: 15px
+    &__title
+      font-size: 28px
