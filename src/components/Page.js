@@ -21,6 +21,7 @@ export default class Menu extends React.Component {
     let nextPagename = nextProps.match.params.pagename
     if (nextPagename !== this.props.match.params.pagename) {
       this.requestPage(nextPagename);
+      this.refreshtopbar();
     }
   }
 
@@ -35,6 +36,10 @@ export default class Menu extends React.Component {
     });
   }
 
+  refreshtopbar = () => {
+    return true
+  }
+
   render(){
 
     if (!this.state.page) {
@@ -45,7 +50,7 @@ export default class Menu extends React.Component {
 
     return(
       <div className="s-page">
-        <Topbar />
+        <Topbar willUpdate={this.refreshtopbar()}/>
         <div className="s-page__content">
           <div className="s-page__title">{this.state.page.title}</div>
           <span dangerouslySetInnerHTML={{ __html: this.state.page.content }} />

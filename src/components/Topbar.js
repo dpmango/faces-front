@@ -48,6 +48,15 @@ export default class Topbar extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    // if ( nextProps.willUpdate !== this.props.willUpdate){
+      this.setState({
+        opened: false,
+        sharing: false
+      })
+    // }
+  }
+
   componentWillUnmount(){
     if ( this.state.audioPlaying ){
       this.bgAudio.stop();

@@ -37,7 +37,8 @@ export default class Profile extends React.Component {
 
 
   renderFilter = (photo) => {
-    return <UnaFilter photo={photo} />
+    return <img src={photo.url} />
+    // return <UnaFilter photo={photo} />
   }
 
   render() {

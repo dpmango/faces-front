@@ -61,9 +61,9 @@ export default class Intro extends Component {
       <div className="intro">
         <Topbar />
         <div className="intro__wrapper">
-          <div className="intro__logo">
+          { /* <div className="intro__logo">
             <img src={logo} alt="logo"/>
-          </div>
+          </div> */ }
           <div className="intro__description">
             <div className="intro__control">
               Используйте механизм бесконечной прокрутки
