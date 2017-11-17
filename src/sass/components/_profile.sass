@@ -52,7 +52,7 @@
       color: rgba(white, .6)
 
     &__content
-      flex: 0 1 auto
+      flex: 1 1 auto
       font-family: 'Open Sans', 'Roboto', sans-serif
       overflow-y: auto
       margin-left: 50px
@@ -60,6 +60,20 @@
       p
         font-size: 17px
         line-height: 1.67
+      .videodetector
+        position: relative
+        height: 0
+        overflow: hidden
+        padding-bottom: 56.25%
+
+        iframe
+          position: absolute
+          top: 0
+          left: 0
+          width: 100%
+          height: 100%
+        input
+          display: none
 
 
   .profile-animation
@@ -100,6 +114,7 @@
         overflow-y: hidden
         margin-left: 0px
         margin-bottom: 50px
+        max-width: 100%
         p
           font-size: 16px
 
