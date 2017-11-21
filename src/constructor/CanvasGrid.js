@@ -352,7 +352,7 @@ export default class CanvasGrid {
       }
 
       if ( currImage == this.selectedImage ){
-        TweenMax.to(currImage, 1, {scale: 0.8, delay: 0});
+        TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
       } else {
         // update global selected image only if changed
         TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
