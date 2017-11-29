@@ -63,6 +63,7 @@ export default class CanvasGrid {
     this.currentImage = 0;
     this.selectedImage = {};
     this.gridImages = [];
+    this.isFirstRender = true;
     this.sizeCanvas();
     this.dragCanvas();
     this.scrollCanvas();
@@ -163,10 +164,11 @@ export default class CanvasGrid {
       height: options[randomOption].height,
       image: this.images[this.currentImage],
       post: this.posts[this.currentImage],
-      scale: 0.001
+      scale: 1,
+      isAnimationAvailable: true
     }
 
-    TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
+    // TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
 
     this.gridImages.push(gridImage);
 
@@ -188,48 +190,55 @@ export default class CanvasGrid {
   }
 
   render = () => {
-    this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    this.drawImages();
-    // this.grayscaling();
+    console.log(this.isFirstRender)
+    if ( this.isFirstRender ){
+      this.drawAllImages(true);
+    } else {
+      this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      this.drawAllImages();
+    }
     if (this.gridStatus === 'playing') {
       // REFACTOR
-      // need some kind of throttle?
       requestAnimationFrame(this.render);
     }
   }
 
-  drawImages = () => {
+  drawAllImages = (isFirst) => {
     this.gridImages.forEach((gridImage) => {
-
-      const fullWidth = (gridImage.width * this.squareSize);
-      const fullHeight = (gridImage.height * this.squareSize);
-
-      const width = fullWidth * gridImage.scale;
-      const height = fullHeight * gridImage.scale;
-
-      const centeringX = (fullWidth - width) / 2;
-      const centeringY = (fullHeight - height) / 2;
-
-      const x = (gridImage.col * this.squareSize) + this.xMovement() + centeringX;
-      const y = (gridImage.row * this.squareSize) + this.yMovement() + centeringY;
-
-      this.drawImageProp(
-        this.context,
-        gridImage.image, x, y, width, height
-      );
+      this.drawImage(gridImage, isFirst)
     });
+  }
+
+  drawImage = (gridImage, isFirst) => {
+    const fullWidth = (gridImage.width * this.squareSize);
+    const fullHeight = (gridImage.height * this.squareSize);
+
+    const width = fullWidth * gridImage.scale;
+    const height = fullHeight * gridImage.scale;
+
+    const centeringX = (fullWidth - width) / 2;
+    const centeringY = (fullHeight - height) / 2;
+
+    const x = (gridImage.col * this.squareSize) + this.xMovement() + centeringX;
+    const y = (gridImage.row * this.squareSize) + this.yMovement() + centeringY;
+
+    this.drawImageProp(
+      this.context,
+      gridImage, x, y, width, height,
+      isFirst
+    );
   }
 
   // Simulating background cover so that the images are centered to cover the square and they aren't stretched
   // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
   // drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
 
-  drawImageProp = (ctx, img, x, y, w, h) => {
+  drawImageProp = (ctx, img, x, y, w, h, isFirst) => {
     const offsetX = 0.5;
     const offsetY = 0.5;
 
-    let iw = img.width,
-      ih = img.height,
+    let iw = img.image.width,
+      ih = img.image.height,
       r = Math.min(w / iw, h / ih),
       nw = iw * r,   // new prop. width
       nh = ih * r,   // new prop. height
@@ -257,15 +266,66 @@ export default class CanvasGrid {
     // fill image in dest. rectangle
     // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
 
-    ctx.globalCompositeOperation = "source-over";
-    ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-    ctx.globalCompositeOperation = "multiply"
-    ctx.fillStyle = "rgba(0,0,0,.7)";
-    ctx.fillRect(x, y, w, h)
-    // ctx.globalCompositeOperation = "destination-in";
-    // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-    ctx.globalCompositeOperation = "source-over";
+    if ( cw ){
+      let imgProps = {
+        img: img,
+        cx: cx,
+        cy: cy,
+        cw: cw,
+        ch: ch,
+        x: x,
+        y: y,
+        w: 0,
+        h: 0
+      }
 
+      if ( !isFirst ){
+        imgProps.w = w;
+        imgProps.h = h;
+      }
+
+      // ctx.globalCompositeOperation = "source-over";
+      // ctx.drawImage(imgProps.img, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+      // if ( isFirst ){
+      //   if ( img.isAnimationAvailable ){
+      //     TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: animateImage, onComplete: function(that){
+      //       console.log(that)
+      //       that.isFirstRender = false;
+      //     }});
+      //     img.isAnimationAvailable = false;
+      //   } else {
+      //
+      //   }
+      // } else {
+      //   ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+      // }
+
+      if ( img.isAnimationAvailable ){
+        TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: animateImage, onComplete: function(that){
+          console.log(that)
+          that.isFirstRender = false;
+        }});
+        img.isAnimationAvailable = false;
+      } else {
+        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+      }
+
+
+      // reset first render
+      //this.isFirstRender = false;
+
+      // ctx.globalCompositeOperation = "multiply"
+      // ctx.fillStyle = "rgba(0,0,0,.7)";
+      // ctx.fillRect(x, y, w, h)
+      // // ctx.globalCompositeOperation = "destination-in";
+      // // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+      // ctx.globalCompositeOperation = "source-over";
+
+      function animateImage(){
+        ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+      }
+    }
   }
 
   dragCanvas = () => {

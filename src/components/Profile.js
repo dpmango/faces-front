@@ -1,6 +1,6 @@
 import React from 'react';
 import api from '../constructor/Api';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { TweenMax, Back } from 'gsap';
 
@@ -20,13 +20,39 @@ export default class Profile extends React.Component {
   componentWillMount() {
     const postId = this.props.match.params.uuid;
 
+    this.getProfile(postId);
+  }
+
+  getProfile = (postId, delay) =>{
     api.get(`posts/${postId}`, {
       context: this
     }).then(post => {
-      this.setState({
-        post: post.data
-      });
-      this.animateTransition();
+
+      if ( delay ){
+        let _that = this;
+        let cacheImg = post.data.photo.url;
+
+        this.animateBack();
+
+        this.props.history.push('/grid/' + postId )
+
+        setTimeout(function(){
+          _that.setState({
+            post: post.data
+          });
+        }, delay);
+
+        setTimeout(function(){
+          _that.animateTransition();
+        }, delay + 300);
+
+      } else {
+        this.setState({
+          post: post.data
+        });
+        this.animateTransition();
+      }
+
     });
   }
 
@@ -35,10 +61,25 @@ export default class Profile extends React.Component {
     TweenMax.to('.profile-animation', 1, {opacity: 1, y: '0%', delay: 0.5, ease: Back.easeOut.config(1.7)});
   }
 
+  animateBack = () => {
+    TweenMax.to(this.imgWithFilter, 1, {opacity: 0, x: '-20%', ease: Back.easeOut.config(1.7)});
+    TweenMax.to('.profile-animation', 1, {opacity: 0, y: '-50px', delay: 0.5, ease: Back.easeOut.config(1.7)});
+  }
+
 
   renderFilter = (photo) => {
     return <img src={photo.url} />
     // return <UnaFilter photo={photo} />
+  }
+
+  prevProfile = () => {
+    let nextPost = this.state.post.id - 1;
+    this.getProfile(nextPost, 1000);
+  }
+
+  nextProfile = () => {
+    let nextPost = this.state.post.id + 1;
+    this.getProfile(nextPost, 1000);
   }
 
   render() {
@@ -65,6 +106,18 @@ export default class Profile extends React.Component {
               <h3 className="profile-info__position profile-animation">{post.position.toUpperCase()}</h3>
             </div>
             <p className="profile-info__content profile-animation" dangerouslySetInnerHTML={{ __html: post.description }} />
+          </div>
+
+          <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
+            <div className="btn btn-line">
+              <span>Предидущий</span>
+            </div>
+          </div>
+
+          <div className="profile-info__next" onClick={this.nextProfile.bind(this)}>
+            <div className="btn btn-line">
+              <span>Следующий</span>
+            </div>
           </div>
         </div>
       </div>

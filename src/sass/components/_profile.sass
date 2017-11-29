@@ -75,6 +75,23 @@
         input
           display: none
 
+    &__next, &__prev
+      position: absolute
+      color: white
+      cursor: pointer
+      .btn
+        font-size: 15px
+
+    &__next
+      right: -10px
+      top: calc(50% + 80px)
+      transform-origin: right bottom 0
+      transform: rotate(90deg)
+    &__prev
+      left: -20px
+      top: calc(50% - 4px)
+      transform-origin: left bottom 0
+      transform: rotate(90deg)
 
   .profile-animation
     opacity: 0

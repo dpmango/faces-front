@@ -1353,6 +1353,40 @@ button:focus {
   display: none;
 }
 
+.profile-info__next, .profile-info__prev {
+  position: absolute;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-info__next .btn, .profile-info__prev .btn {
+  font-size: 15px;
+}
+
+.profile-info__next {
+  right: -10px;
+  top: -webkit-calc(50% + 80px);
+  top: calc(50% + 80px);
+  -webkit-transform-origin: right bottom 0;
+      -ms-transform-origin: right bottom 0;
+          transform-origin: right bottom 0;
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.profile-info__prev {
+  left: -20px;
+  top: -webkit-calc(50% - 4px);
+  top: calc(50% - 4px);
+  -webkit-transform-origin: left bottom 0;
+      -ms-transform-origin: left bottom 0;
+          transform-origin: left bottom 0;
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
 .profile .profile-animation {
   opacity: 0;
   -webkit-transform: translateY(20%);
