@@ -190,7 +190,6 @@ export default class CanvasGrid {
   }
 
   render = () => {
-    console.log(this.isFirstRender)
     if ( this.isFirstRender ){
       this.drawAllImages(true);
     } else {
@@ -284,35 +283,14 @@ export default class CanvasGrid {
         imgProps.h = h;
       }
 
-      // ctx.globalCompositeOperation = "source-over";
-      // ctx.drawImage(imgProps.img, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
-      // if ( isFirst ){
-      //   if ( img.isAnimationAvailable ){
-      //     TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: animateImage, onComplete: function(that){
-      //       console.log(that)
-      //       that.isFirstRender = false;
-      //     }});
-      //     img.isAnimationAvailable = false;
-      //   } else {
-      //
-      //   }
-      // } else {
-      //   ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
-      // }
-
       if ( img.isAnimationAvailable ){
         TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: animateImage, onComplete: function(that){
-          console.log(that)
           that.isFirstRender = false;
         }});
         img.isAnimationAvailable = false;
       } else {
-        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+        animateImageNormal();
       }
-
-
-      // reset first render
-      //this.isFirstRender = false;
 
       // ctx.globalCompositeOperation = "multiply"
       // ctx.fillStyle = "rgba(0,0,0,.7)";
@@ -321,9 +299,26 @@ export default class CanvasGrid {
       // // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
       // ctx.globalCompositeOperation = "source-over";
 
+      function animateImageNormal(){
+        ctx.globalCompositeOperation = "source-over";
+        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+        ctx.globalCompositeOperation = "multiply"
+        ctx.fillStyle = "rgba(0,0,0,.7)";
+        ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
+        // ctx.globalCompositeOperation = "destination-in";
+        // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+        ctx.globalCompositeOperation = "source-over";
+      }
       function animateImage(){
+        ctx.globalCompositeOperation = "source-over";
         ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
         ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+        ctx.globalCompositeOperation = "multiply"
+        ctx.fillStyle = "rgba(0,0,0,.7)";
+        ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
+        // ctx.globalCompositeOperation = "destination-in";
+        // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+        ctx.globalCompositeOperation = "source-over";
       }
     }
   }
@@ -438,9 +433,9 @@ export default class CanvasGrid {
   stopGrid = () => {
     this.gridStatus = 'inactive';
   }
+
   removeGrid = () => {
     this.gridContainer.removeChild(this.canvas);
   }
-
 
 }
