@@ -10,21 +10,7 @@ export default class CanvasGrid {
   constructor(gridContainer, posts, redirectToProfile, filter) {
     this.gridContainer = gridContainer;
 
-    // api is now selecting by category - this might be not necassary
-    this.posts = posts.filter((post,key) => {
-      if ( filter === "hero" ){
-        if ( posts[key].category === "hero" ){
-          return posts[key];
-        }
-      } else if ( filter === "sharevision"){
-        if ( posts[key].category === "sharevision" ){
-          return posts[key];
-        }
-      }
-      else{
-        return posts[key];
-      }
-    });
+    this.posts = posts;
 
     this.redirectToProfile = redirectToProfile;
 
@@ -64,7 +50,7 @@ export default class CanvasGrid {
     this.currentImage = 0;
     this.selectedImage = {};
     this.gridImages = [];
-    this.isFirstRender = true;
+
     this.sizeCanvas();
     this.dragCanvas();
     this.scrollCanvas();
@@ -165,12 +151,11 @@ export default class CanvasGrid {
       height: options[randomOption].height,
       image: this.images[this.currentImage],
       post: this.posts[this.currentImage],
-      scale: 1,
-      isAnimationAvailable: true,
+      scale: 0.0001,
       isHoverAvailable: false
     }
 
-    // TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
+    TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
 
     this.gridImages.push(gridImage);
 
@@ -193,12 +178,10 @@ export default class CanvasGrid {
 
   render = () => {
     if ( !this.gridFreeze ){
-      if ( this.isFirstRender ){
-        this.drawAllImages(true);
-      } else {
-        this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        this.drawAllImages();
-      }
+      this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      this.drawAllImages();
+    } else {
+      console.log('grid is frozen - do hover animations');
     }
     if (this.gridStatus === 'playing') {
       // REFACTOR
@@ -206,13 +189,13 @@ export default class CanvasGrid {
     }
   }
 
-  drawAllImages = (isFirst) => {
+  drawAllImages = () => {
     this.gridImages.forEach((gridImage) => {
-      this.drawImage(gridImage, isFirst)
+      this.drawImage(gridImage)
     });
   }
 
-  drawImage = (gridImage, isFirst, isHover) => {
+  drawImage = (gridImage, isHover) => {
     const fullWidth = (gridImage.width * this.squareSize);
     const fullHeight = (gridImage.height * this.squareSize);
 
@@ -228,7 +211,7 @@ export default class CanvasGrid {
     this.drawImageProp(
       this.context,
       gridImage, x, y, width, height,
-      isFirst, isHover
+      isHover
     );
   }
 
@@ -236,7 +219,7 @@ export default class CanvasGrid {
   // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
   // drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
 
-  drawImageProp = (ctx, img, x, y, w, h, isFirst, isHoverIn, isHoverOut) => {
+  drawImageProp = (ctx, img, x, y, w, h, isHoverIn, isHoverOut) => {
     let offsetX = 0.5;
     let offsetY = 0.5;
 
@@ -288,29 +271,30 @@ export default class CanvasGrid {
         ch: ch,
         x: x,
         y: y,
-        w: 0,
-        h: 0,
+        w: w,
+        h: h,
         alpha: .7
       }
 
-      if ( !isFirst ){
-        imgProps.w = w;
-        imgProps.h = h;
-      }
+      // if ( img.isAnimationAvailable ){
+      //   imgProps.w = 0;
+      //   imgProps.h = 0;
+      // }
 
       // if ( img.isHoverAvailable ){
       //   imgProps.alpha = 0;
       // }
+      //
+      // TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+      //
+      // }});
+      // img.isAnimationAvailable = false;
 
-      if ( img.isAnimationAvailable ){
-        TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
-          that.isFirstRender = false;
-        }});
-        img.isAnimationAvailable = false;
-      } else if ( img.isHoverAvailable ){
+      if ( img.isHoverAvailable ){
+        // don't request animation frame and rerender all grid
         this.freezeGrid();
 
-        console.log(cw, ch)
+        // console.log(cw, ch)
 
         TweenMax.to(imgProps, 1, {
             cx: cx - 20,
@@ -320,17 +304,19 @@ export default class CanvasGrid {
             // w: w * 1.1,
             // h: h * 1.1,
             alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
-
-          // that.unFreezeGrid();
+              // that.unFreezeGrid();
+              img.isHoverAvailable = false;
         }});
-        img.isHoverAvailable = false;
+
       } else {
+        this.unFreezeGrid();
         drawImageFrame();
       }
 
       function drawImageFrame(){
-        ctx.globalCompositeOperation = "source-over";
         ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+        // compose alpha
+        ctx.globalCompositeOperation = "source-over";
         ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
         ctx.globalCompositeOperation = "multiply"
         ctx.fillStyle = "rgba(0,0,0,"+imgProps.alpha+")";
@@ -434,28 +420,16 @@ export default class CanvasGrid {
         }, 50)
 
         currImage.isHoverAvailable = true;
-        this.drawImage(currImage, false, true, false);
+        // [img, hoverIn, hoverOut]
+        this.drawImage(currImage, true, false);
 
-      } else {
-        this.unFreezeGrid();
-      }
-
-      if ( currImage == this.selectedImage ){
-        // var aImage = this.gridImages.filter((arr)=>{
-        //   return arr.row == currImage.row && arr.col == currImage.col;
-        // });
-
-        // this.drawImage(aImage[0], false, true)
-        // console.log(currImage)
-
-        // currImage.isHoverAvailable = true;
-        // this.drawImage(currImage, false, true, false);
         // TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
-      } else {
-        // update global selected image only if changed
-        // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
-        // back animation here
         this.selectedImage = currImage;
+
+      } else {
+        // this.unFreezeGrid();
+        // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+        // but we rerender all to reset siblings
       }
 
     }, 100, { 'trailing': false }) );
@@ -487,6 +461,13 @@ export default class CanvasGrid {
   }
 
   unFreezeGrid = () => {
+    // to default state
+
+    // and reset all img's
+    this.gridImages.forEach((gridImage) => {
+      gridImage.isHoverAvailable = false;
+    });
+
     this.gridFreeze = false;
   }
 
