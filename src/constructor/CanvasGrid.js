@@ -35,6 +35,7 @@ export default class CanvasGrid {
     this.gridContainer.appendChild(this.canvas);
 
     this.gridStatus = 'playing';
+    this.gridFreeze = false;
 
     this.offset = {
       x: 0,
@@ -165,7 +166,8 @@ export default class CanvasGrid {
       image: this.images[this.currentImage],
       post: this.posts[this.currentImage],
       scale: 1,
-      isAnimationAvailable: true
+      isAnimationAvailable: true,
+      isHoverAvailable: false
     }
 
     // TweenMax.to(gridImage, 1, {scale: 1, delay: Math.random() / 2});
@@ -190,11 +192,13 @@ export default class CanvasGrid {
   }
 
   render = () => {
-    if ( this.isFirstRender ){
-      this.drawAllImages(true);
-    } else {
-      this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      this.drawAllImages();
+    if ( !this.gridFreeze ){
+      if ( this.isFirstRender ){
+        this.drawAllImages(true);
+      } else {
+        this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        this.drawAllImages();
+      }
     }
     if (this.gridStatus === 'playing') {
       // REFACTOR
@@ -208,7 +212,7 @@ export default class CanvasGrid {
     });
   }
 
-  drawImage = (gridImage, isFirst) => {
+  drawImage = (gridImage, isFirst, isHover) => {
     const fullWidth = (gridImage.width * this.squareSize);
     const fullHeight = (gridImage.height * this.squareSize);
 
@@ -224,7 +228,7 @@ export default class CanvasGrid {
     this.drawImageProp(
       this.context,
       gridImage, x, y, width, height,
-      isFirst
+      isFirst, isHover
     );
   }
 
@@ -232,9 +236,19 @@ export default class CanvasGrid {
   // By Ken Fyrstenberg Nilsen (http://stackoverflow.com/questions/21961839/simulation-background-size-cover-in-canvas)
   // drawImageProp(context, image [, x, y, width, height [,offsetX, offsetY]])
 
-  drawImageProp = (ctx, img, x, y, w, h, isFirst) => {
-    const offsetX = 0.5;
-    const offsetY = 0.5;
+  drawImageProp = (ctx, img, x, y, w, h, isFirst, isHoverIn, isHoverOut) => {
+    let offsetX = 0.5;
+    let offsetY = 0.5;
+
+    // default offset is center
+    // offsetX = typeof offsetX === "number" ? offsetX : 0.5;
+    // offsetY = typeof offsetY === "number" ? offsetY : 0.5;
+
+    // keep bounds [0.0, 1.0]
+    if (offsetX < 0) offsetX = 0;
+    if (offsetY < 0) offsetY = 0;
+    if (offsetX > 1) offsetX = 1;
+    if (offsetY > 1) offsetY = 1;
 
     let iw = img.image.width,
       ih = img.image.height,
@@ -275,7 +289,8 @@ export default class CanvasGrid {
         x: x,
         y: y,
         w: 0,
-        h: 0
+        h: 0,
+        alpha: .7
       }
 
       if ( !isFirst ){
@@ -283,38 +298,42 @@ export default class CanvasGrid {
         imgProps.h = h;
       }
 
+      // if ( img.isHoverAvailable ){
+      //   imgProps.alpha = 0;
+      // }
+
       if ( img.isAnimationAvailable ){
-        TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: animateImage, onComplete: function(that){
+        TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
           that.isFirstRender = false;
         }});
         img.isAnimationAvailable = false;
+      } else if ( img.isHoverAvailable ){
+        this.freezeGrid();
+
+        console.log(cw, ch)
+
+        TweenMax.to(imgProps, 1, {
+            cx: cx - 20,
+            cy: cy - 20,
+            // cw: cw * 1.1,
+            // cy: cy * 1.1,
+            // w: w * 1.1,
+            // h: h * 1.1,
+            alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+
+          // that.unFreezeGrid();
+        }});
+        img.isHoverAvailable = false;
       } else {
-        animateImageNormal();
+        drawImageFrame();
       }
 
-      // ctx.globalCompositeOperation = "multiply"
-      // ctx.fillStyle = "rgba(0,0,0,.7)";
-      // ctx.fillRect(x, y, w, h)
-      // // ctx.globalCompositeOperation = "destination-in";
-      // // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-      // ctx.globalCompositeOperation = "source-over";
-
-      function animateImageNormal(){
-        ctx.globalCompositeOperation = "source-over";
-        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
-        ctx.globalCompositeOperation = "multiply"
-        ctx.fillStyle = "rgba(0,0,0,.7)";
-        ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
-        // ctx.globalCompositeOperation = "destination-in";
-        // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-        ctx.globalCompositeOperation = "source-over";
-      }
-      function animateImage(){
+      function drawImageFrame(){
         ctx.globalCompositeOperation = "source-over";
         ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
         ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
         ctx.globalCompositeOperation = "multiply"
-        ctx.fillStyle = "rgba(0,0,0,.7)";
+        ctx.fillStyle = "rgba(0,0,0,"+imgProps.alpha+")";
         ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
         // ctx.globalCompositeOperation = "destination-in";
         // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
@@ -336,6 +355,10 @@ export default class CanvasGrid {
     })
 
     hammer.on('panleft panright panup pandown panend tap press', (e) => {
+
+      // reset render
+      this.unFreezeGrid();
+
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
         this.delta.x = e.deltaX;
         this.delta.y = e.deltaY;
@@ -368,6 +391,10 @@ export default class CanvasGrid {
 
   scrollCanvas = () => {
     this.canvas.addEventListener('wheel', (e) => {
+
+      // reset render
+      this.unFreezeGrid();
+
       // invert delta
       let delta = e.deltaY
       if ( e.deltaY < 0 ){
@@ -390,6 +417,7 @@ export default class CanvasGrid {
   }
 
   hoverCanvas = () => {
+
     this.canvas.addEventListener('mousemove', throttle( (e) => {
 
       const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
@@ -404,13 +432,29 @@ export default class CanvasGrid {
         setTimeout(() => {
           hover.play();
         }, 50)
+
+        currImage.isHoverAvailable = true;
+        this.drawImage(currImage, false, true, false);
+
+      } else {
+        this.unFreezeGrid();
       }
 
       if ( currImage == this.selectedImage ){
-        TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
+        // var aImage = this.gridImages.filter((arr)=>{
+        //   return arr.row == currImage.row && arr.col == currImage.col;
+        // });
+
+        // this.drawImage(aImage[0], false, true)
+        // console.log(currImage)
+
+        // currImage.isHoverAvailable = true;
+        // this.drawImage(currImage, false, true, false);
+        // TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
       } else {
         // update global selected image only if changed
-        TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+        // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+        // back animation here
         this.selectedImage = currImage;
       }
 
@@ -432,6 +476,18 @@ export default class CanvasGrid {
 
   stopGrid = () => {
     this.gridStatus = 'inactive';
+  }
+
+  playGrid = () => {
+    this.gridStatus = 'playing';
+  }
+
+  freezeGrid = () => {
+    this.gridFreeze = true;
+  }
+
+  unFreezeGrid = () => {
+    this.gridFreeze = false;
   }
 
   removeGrid = () => {
