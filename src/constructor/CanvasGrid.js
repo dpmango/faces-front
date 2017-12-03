@@ -22,6 +22,7 @@ export default class CanvasGrid {
 
     this.gridStatus = 'playing';
     this.gridFreeze = false;
+    this.gridChangingPosition = false;
 
     this.offset = {
       x: 0,
@@ -262,6 +263,7 @@ export default class CanvasGrid {
     // fill image in dest. rectangle
     // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
 
+    // if cw meant we got image properties - i.e image is downloaded
     if ( cw ){
       let imgProps = {
         img: img,
@@ -276,15 +278,10 @@ export default class CanvasGrid {
         alpha: .7
       }
 
-      // if ( img.isAnimationAvailable ){
-      //   imgProps.w = 0;
-      //   imgProps.h = 0;
-      // }
-
       // if ( img.isHoverAvailable ){
       //   imgProps.alpha = 0;
       // }
-      //
+
       // TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
       //
       // }});
@@ -293,8 +290,6 @@ export default class CanvasGrid {
       if ( img.isHoverAvailable ){
         // don't request animation frame and rerender all grid
         this.freezeGrid();
-
-        // console.log(cw, ch)
 
         TweenMax.to(imgProps, 1, {
             cx: cx - 20,
@@ -305,8 +300,9 @@ export default class CanvasGrid {
             // h: h * 1.1,
             alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
               // that.unFreezeGrid();
-              img.isHoverAvailable = false;
+              // img.isHoverAvailable = false;
         }});
+        img.isHoverAvailable = false;
 
       } else {
         this.unFreezeGrid();
@@ -345,6 +341,8 @@ export default class CanvasGrid {
       // reset render
       this.unFreezeGrid();
 
+      this.gridChangingPosition = true;
+
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
         this.delta.x = e.deltaX;
         this.delta.y = e.deltaY;
@@ -355,6 +353,8 @@ export default class CanvasGrid {
         this.offset.y += this.delta.y;
         this.delta.x = 0;
         this.delta.y = 0;
+
+        this.gridChangingPosition = false;
       }
 
       if(e.type === 'tap' || e.type === 'press') {
@@ -369,17 +369,27 @@ export default class CanvasGrid {
       e.preventDefault();
     });
 
-    hammer.on('panleft panright panup pandown', throttle( (e) => {
+    hammer.on('panleft panright panup pandown', throttle( () => {
       this.initializeGrid();
       this.fillGrid();
     }, 300));
   }
 
   scrollCanvas = () => {
+    let hasFinnishedScroll = false;
+
     this.canvas.addEventListener('wheel', (e) => {
 
       // reset render
       this.unFreezeGrid();
+
+      this.gridChangingPosition = true;
+
+      // 1s should be enough to render Tweenmax animations
+      setTimeout(() =>{
+        this.gridChangingPosition = false;
+        hasFinnishedScroll = true;
+      }, 1000)
 
       // invert delta
       let delta = e.deltaY
@@ -409,27 +419,34 @@ export default class CanvasGrid {
       const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
       const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
 
-      let currImage = this.grid[row][col];
+      // wait till scroll/drag finnishing
+      if ( !this.gridChangingPosition ){
+        let currImage = this.grid[row][col];
 
-      // debbug error when hovered blank image
-      // (not loaded or canvas resizing?)
+        // debbug error when hovered blank image
+        // (not loaded or canvas resizing?)
 
-      if ( currImage !== this.selectedImage ){
-        setTimeout(() => {
-          hover.play();
-        }, 50)
+        if ( currImage !== this.selectedImage ){
+          // wait till it's scaled
+          if ( currImage.scale == 1 ){
 
-        currImage.isHoverAvailable = true;
-        // [img, hoverIn, hoverOut]
-        this.drawImage(currImage, true, false);
+            setTimeout(() => {
+              hover.play();
+            }, 50)
 
-        // TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
-        this.selectedImage = currImage;
+            currImage.isHoverAvailable = true;
+            // [img, hoverIn, hoverOut]
+            this.drawImage(currImage, true, false);
 
-      } else {
-        // this.unFreezeGrid();
-        // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
-        // but we rerender all to reset siblings
+            // TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
+            this.selectedImage = currImage;
+          }
+
+        } else {
+          // this.unFreezeGrid();
+          // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+          // but we rerender all to reset siblings
+        }
       }
 
     }, 100, { 'trailing': false }) );
