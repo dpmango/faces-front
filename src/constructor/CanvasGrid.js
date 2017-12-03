@@ -49,7 +49,7 @@ export default class CanvasGrid {
     });
 
     this.currentImage = 0;
-    this.selectedImage = {};
+    this.hoveredImage = {};
     this.gridImages = [];
 
     this.sizeCanvas();
@@ -144,6 +144,12 @@ export default class CanvasGrid {
 
     const randomOption = this.random(0, options.length - 1);
 
+    // transform to square
+    options.forEach((opt) => {
+      opt.height = 1;
+      opt.width = 1;
+    });
+
     // All info about the img that's about to be drawn into the square(s)
     const gridImage = {
       row: row,
@@ -182,7 +188,7 @@ export default class CanvasGrid {
       this.context.clearRect(0, 0, window.innerWidth, window.innerHeight);
       this.drawAllImages();
     } else {
-      console.log('grid is frozen - do hover animations');
+      // grid frozen, no rerender of all images
     }
     if (this.gridStatus === 'playing') {
       // REFACTOR
@@ -196,7 +202,7 @@ export default class CanvasGrid {
     });
   }
 
-  drawImage = (gridImage, isHover) => {
+  drawImage = (gridImage, isHoverIn, isHoverOut) => {
     const fullWidth = (gridImage.width * this.squareSize);
     const fullHeight = (gridImage.height * this.squareSize);
 
@@ -212,7 +218,7 @@ export default class CanvasGrid {
     this.drawImageProp(
       this.context,
       gridImage, x, y, width, height,
-      isHover
+      isHoverIn, isHoverOut
     );
   }
 
@@ -265,12 +271,14 @@ export default class CanvasGrid {
 
     // if cw meant we got image properties - i.e image is downloaded
     if ( cw ){
+      let cropParam = 1.07;
+
       let imgProps = {
         img: img,
         cx: cx,
         cy: cy,
-        cw: cw,
-        ch: ch,
+        cw: cw / cropParam,
+        ch: ch / cropParam,
         x: x,
         y: y,
         w: w,
@@ -278,30 +286,39 @@ export default class CanvasGrid {
         alpha: .7
       }
 
-      // if ( img.isHoverAvailable ){
-      //   imgProps.alpha = 0;
-      // }
-
-      // TweenMax.to(imgProps, 1, {w: w, h: h, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
-      //
-      // }});
-      // img.isAnimationAvailable = false;
+      if ( isHoverOut ){
+        imgProps.cw = cw,
+        imgProps.ch = ch,
+        imgProps.alpha = 0;
+      }
 
       if ( img.isHoverAvailable ){
         // don't request animation frame and rerender all grid
         this.freezeGrid();
 
-        TweenMax.to(imgProps, 1, {
-            cx: cx - 20,
-            cy: cy - 20,
-            // cw: cw * 1.1,
-            // cy: cy * 1.1,
-            // w: w * 1.1,
-            // h: h * 1.1,
-            alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
-              // that.unFreezeGrid();
-              // img.isHoverAvailable = false;
-        }});
+        if ( isHoverIn ){
+          TweenMax.to(imgProps, 1, {
+              // cx: cx - 20,
+              // cy: cy - 20,
+              cw: cw,
+              ch: ch,
+              alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+                // that.unFreezeGrid();
+                // img.isHoverAvailable = false;
+          }});
+        } else if ( isHoverOut ){
+
+          TweenMax.to(imgProps, 1, {
+              // cx: cx - 20,
+              // cy: cy - 20,
+              cw: cw / cropParam,
+              ch: ch / cropParam,
+              alpha: .7,
+              delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+                // that.unFreezeGrid();
+                // img.isHoverAvailable = false;
+          }});
+        }
         img.isHoverAvailable = false;
 
       } else {
@@ -423,33 +440,41 @@ export default class CanvasGrid {
       if ( !this.gridChangingPosition ){
         let currImage = this.grid[row][col];
 
-        // debbug error when hovered blank image
-        // (not loaded or canvas resizing?)
-
-        if ( currImage !== this.selectedImage ){
+        if ( currImage !== this.hoveredImage ){
           // wait till it's scaled
           if ( currImage.scale == 1 ){
 
-            setTimeout(() => {
-              hover.play();
-            }, 50)
+            hover.play();
 
+            // current hovered image
             currImage.isHoverAvailable = true;
             // [img, hoverIn, hoverOut]
             this.drawImage(currImage, true, false);
 
+            // previous hovered image
+            if ( Object.keys(this.hoveredImage).length !== 0 && this.hoveredImage.constructor === Object){
+              console.log('prev image', this.hoveredImage.image)
+              this.hoveredImage.isHoverAvailable = true;
+              this.drawImage(this.hoveredImage, false, true);
+            }
+
             // TweenMax.to(currImage, 1, {scale: 1.2, delay: 0});
-            this.selectedImage = currImage;
+            this.hoveredImage = currImage;
           }
 
         } else {
+          // triggered when hovering within the hovered image
+
           // this.unFreezeGrid();
-          // TweenMax.to(this.selectedImage, 1, {scale: 1, delay: 0});
+          // TweenMax.to(this.hoveredImage, 1, {scale: 1, delay: 0});
           // but we rerender all to reset siblings
         }
       }
 
-    }, 100, { 'trailing': false }) );
+    }, 50, {
+      'leading': true,
+      'trailing': false
+    }) );
   }
 
   resizeCanvas = () => {
