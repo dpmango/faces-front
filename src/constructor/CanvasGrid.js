@@ -326,17 +326,23 @@ export default class CanvasGrid {
         drawImageFrame();
       }
 
+      // let frozen = this.gridFreeze;
+      let frozen = this.gridChangingPosition;
+
       function drawImageFrame(){
-        ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
-        // compose alpha
-        ctx.globalCompositeOperation = "source-over";
-        ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
-        ctx.globalCompositeOperation = "multiply"
-        ctx.fillStyle = "rgba(0,0,0,"+imgProps.alpha+")";
-        ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
-        // ctx.globalCompositeOperation = "destination-in";
-        // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
-        ctx.globalCompositeOperation = "source-over";
+
+        if ( !frozen ){
+          ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+          // compose alpha
+          ctx.globalCompositeOperation = "source-over";
+          ctx.drawImage(imgProps.img.image, imgProps.cx, imgProps.cy, imgProps.cw, imgProps.ch, imgProps.x, imgProps.y, imgProps.w, imgProps.h);
+          ctx.globalCompositeOperation = "multiply"
+          ctx.fillStyle = "rgba(0,0,0,"+imgProps.alpha+")";
+          ctx.fillRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h)
+          // ctx.globalCompositeOperation = "destination-in";
+          // ctx.drawImage(img, cx, cy, cw, ch, x, y, w, h);
+          ctx.globalCompositeOperation = "source-over";
+        }
       }
     }
   }
@@ -464,10 +470,6 @@ export default class CanvasGrid {
 
         } else {
           // triggered when hovering within the hovered image
-
-          // this.unFreezeGrid();
-          // TweenMax.to(this.hoveredImage, 1, {scale: 1, delay: 0});
-          // but we rerender all to reset siblings
         }
       }
 
