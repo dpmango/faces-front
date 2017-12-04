@@ -63,6 +63,6 @@
     "eject": "react-scripts eject",
     "surge": "mv build/index.html build/200.html && surge --domain hd-visions.surge.sh --project ./build",
     "developer": "concurrently --kill-others \"gulp\" \"yarn start\"",
-    "builder": "gulp build --production && yarn build && yarn surge"
+    "builder": "gulp build --production && yarn build"
   }
 }

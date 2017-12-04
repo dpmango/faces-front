@@ -32,7 +32,7 @@ export default class Topbar extends React.Component {
       audioPlaying: false
     }
     this.bgAudio = new Howl({
-      src: ['/piano2.mp3'],
+      src: ['/music.mp3'],
       loop: true,
       volume: 0.25,
       rate: 0.70

@@ -302,7 +302,8 @@ export default class CanvasGrid {
               // cy: cy - 20,
               cw: cw,
               ch: ch,
-              alpha: 0, delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+              alpha: 0,
+              delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: function(that){
                 // that.unFreezeGrid();
                 // img.isHoverAvailable = false;
           }});
@@ -314,7 +315,7 @@ export default class CanvasGrid {
               cw: cw / cropParam,
               ch: ch / cropParam,
               alpha: .7,
-              delay: 0, onCompleteParams: [this], onUpdate: drawImageFrame, onComplete: function(that){
+              delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: function(that){
                 // that.unFreezeGrid();
                 // img.isHoverAvailable = false;
           }});
@@ -323,15 +324,14 @@ export default class CanvasGrid {
 
       } else {
         this.unFreezeGrid();
-        drawImageFrame();
+        drawImageFrame(this);
       }
 
-      // let frozen = this.gridFreeze;
-      let frozen = this.gridChangingPosition;
+      function drawImageFrame(that){
 
-      function drawImageFrame(){
+        // let frozen = that.gridChangingPosition;
 
-        if ( !frozen ){
+        if ( true == true ){
           ctx.clearRect(imgProps.x, imgProps.y, imgProps.w, imgProps.h);
           // compose alpha
           ctx.globalCompositeOperation = "source-over";
@@ -377,7 +377,9 @@ export default class CanvasGrid {
         this.delta.x = 0;
         this.delta.y = 0;
 
-        this.gridChangingPosition = false;
+        setTimeout(() =>{
+          this.gridChangingPosition = false;
+        }, 1000);
       }
 
       if(e.type === 'tap' || e.type === 'press') {
@@ -459,7 +461,6 @@ export default class CanvasGrid {
 
             // previous hovered image
             if ( Object.keys(this.hoveredImage).length !== 0 && this.hoveredImage.constructor === Object){
-              console.log('prev image', this.hoveredImage.image)
               this.hoveredImage.isHoverAvailable = true;
               this.drawImage(this.hoveredImage, false, true);
             }
