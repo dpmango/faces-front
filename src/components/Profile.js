@@ -87,7 +87,15 @@ export default class Profile extends React.Component {
 
     if (!this.state.post) {
       return (
-        <p>Загрузка...</p>
+        <div className="page-loading">
+          <div className='preloader-squares'>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+          </div>
+          <p className="preloader-name">Загрузка...</p>
+        </div>
       )
     }
 

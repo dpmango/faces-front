@@ -1714,6 +1714,109 @@ button:focus {
   }
 }
 
+.page-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.preloader-name {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 16px;
+  opacity: .6;
+}
+
+.preloader-squares {
+  width: 50px;
+  height: 50px;
+  font-size: 0;
+}
+
+.preloader-squares .square {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  background: #666;
+  opacity: 0.3;
+  -webkit-animation: movein 2s infinite;
+          animation: movein 2s infinite;
+}
+
+.preloader-squares .square:nth-child(1) {
+  -webkit-transform: translate(0, -25px);
+      -ms-transform: translate(0, -25px);
+          transform: translate(0, -25px);
+}
+
+.preloader-squares .square:nth-child(2) {
+  -webkit-transform: translate(25px, 0);
+      -ms-transform: translate(25px, 0);
+          transform: translate(25px, 0);
+}
+
+.preloader-squares .square:nth-child(3) {
+  -webkit-transform: translate(-25px, 0);
+      -ms-transform: translate(-25px, 0);
+          transform: translate(-25px, 0);
+}
+
+.preloader-squares .square:nth-child(4) {
+  -webkit-transform: translate(0, 25px);
+      -ms-transform: translate(0, 25px);
+          transform: translate(0, 25px);
+}
+
+@-webkit-keyframes movein {
+  33% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  66% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    opacity: 0.7;
+  }
+}
+
+@keyframes movein {
+  33% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    opacity: 0.7;
+  }
+  66% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    opacity: 0.7;
+  }
+}
+
 .s-page {
   min-height: 100vh;
   display: -webkit-box;

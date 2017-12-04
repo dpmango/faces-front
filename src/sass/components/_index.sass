@@ -144,3 +144,52 @@
 
 +r($mobile)
   .menu
+
+.page-loading
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+  color: white
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.preloader-name
+  margin-top: 15px
+  text-align: center
+  font-size: 16px
+  opacity: .6
+
+.preloader-squares
+  width: 50px
+  height: 50px
+  font-size: 0
+  .square
+    display: inline-block
+    width: 15px
+    height: 15px
+    margin-left: 5px
+    margin-right: 5px
+    margin-bottom: 10px
+    background: #666
+    opacity: 0.3
+    animation: movein 2s infinite
+    &:nth-child(1)
+      transform: translate(0, -25px)
+    &:nth-child(2)
+      transform: translate(25px, 0)
+    &:nth-child(3)
+      transform: translate(-25px, 0)
+    &:nth-child(4)
+      transform: translate(0, 25px)
+
+@keyframes movein
+  33%
+    transform: translate(0, 0)
+    opacity: 0.7
+
+  66%
+    transform: translate(0, 0)
+    opacity: 0.7

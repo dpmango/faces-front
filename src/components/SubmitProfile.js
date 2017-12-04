@@ -125,8 +125,14 @@ export default class submitProfile extends React.Component {
   render() {
     if (this.state.loading) {
       return(
-        <div>
-          <p className="loading">Загрузка...</p>
+        <div className="page-loading">
+          <div className='preloader-squares'>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+          </div>
+          <p className="preloader-name">Загрузка...</p>
         </div>
       )
     }
