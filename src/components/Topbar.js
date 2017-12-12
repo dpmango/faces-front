@@ -130,6 +130,9 @@ export default class Topbar extends React.Component {
             <TwitterShareButton className="topbar__share-el btn btn-line" url={share.url} hashtags={['hdvisions']}>
               <span>Twitter</span>
             </TwitterShareButton>
+            <Link className="topbar__share-el btn btn-line" to='/form'>
+              <span>#ДЕЛИСЬВЗГЛЯДОМ</span>
+            </Link>
 
           </div>
         </div>

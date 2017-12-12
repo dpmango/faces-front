@@ -1301,11 +1301,17 @@ button:focus {
 }
 
 .profile-info__name {
-  display: block;
   font-size: 60px;
   line-height: 1.1;
   margin: 80px 0px 20px -85px;
   max-width: 400px;
+}
+
+.profile-info__name span {
+  background: #101010;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 1;
 }
 
 .profile-info__position {
@@ -1353,7 +1359,7 @@ button:focus {
 }
 
 .profile-info__next, .profile-info__prev {
-  position: absolute;
+  position: fixed;
   color: white;
   cursor: pointer;
 }
@@ -1363,7 +1369,7 @@ button:focus {
 }
 
 .profile-info__next {
-  right: -10px;
+  right: 30px;
   top: -webkit-calc(50% + 80px);
   top: calc(50% + 80px);
   -webkit-transform-origin: right bottom 0;
@@ -1375,7 +1381,7 @@ button:focus {
 }
 
 .profile-info__prev {
-  left: -20px;
+  left: 20px;
   top: -webkit-calc(50% - 4px);
   top: calc(50% - 4px);
   -webkit-transform-origin: left bottom 0;
@@ -1507,6 +1513,19 @@ button:focus {
 }
 
 .topbar__share {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: absolute;
   top: 40px;
   left: 50%;
@@ -1528,15 +1547,21 @@ button:focus {
 }
 
 .topbar__share-el:nth-child(2) {
-  -webkit-transition-delay: .25s;
-       -o-transition-delay: .25s;
-          transition-delay: .25s;
+  -webkit-transition-delay: .15s;
+       -o-transition-delay: .15s;
+          transition-delay: .15s;
 }
 
 .topbar__share-el:nth-child(3) {
   -webkit-transition-delay: .25s;
        -o-transition-delay: .25s;
           transition-delay: .25s;
+}
+
+.topbar__share-el:nth-child(4) {
+  -webkit-transition-delay: .35s;
+       -o-transition-delay: .35s;
+          transition-delay: .35s;
 }
 
 .topbar__share.is-active .topbar__share-el {
@@ -1900,7 +1925,7 @@ button:focus {
       -ms-flex-align: center;
           align-items: center;
   min-height: 100vh;
-  padding: 70px 40px 20px 40px;
+  padding: 100px 40px 20px 40px;
   color: white;
 }
 
@@ -1911,6 +1936,12 @@ button:focus {
       -ms-flex: 0 0 400px;
           flex: 0 0 400px;
   max-width: 400px;
+}
+
+.submit__image-text {
+  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 .submit__image-preview {

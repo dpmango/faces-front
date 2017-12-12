@@ -142,6 +142,7 @@ export default class submitProfile extends React.Component {
         <Topbar />
         <div className="submit__wrapper">
           <div className="submit__image">
+            <div className="submit__image-text">Отправьте свой материал к нам на рассмотрение. В случае одобрения, он будет опубликован на сайте в категории #ДЕЛИСЬВЗГЛЯДОМ</div>
             <label className={`submit__image-preview ${this.state.photo ? 'is-chosen' : ''} `} htmlFor="change-img">
               <img src={this.state.photo} />
               <div className="submit__image-placeholder">

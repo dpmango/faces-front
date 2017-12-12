@@ -23,6 +23,10 @@ export default class Profile extends React.Component {
     this.getProfile(postId);
   }
 
+  componentDidMount(){
+    this.hookYoutube();
+  }
+
   getProfile = (postId, delay) =>{
     api.get(`posts/${postId}`, {
       context: this
@@ -82,6 +86,32 @@ export default class Profile extends React.Component {
     this.getProfile(nextPost, 1000);
   }
 
+  hookYoutube = () => {
+
+    // let contentEl = this.contentEl
+    // contentEl.addEventListener('onStateChange', 'player_state_changed');
+    //
+    // function player_state_changed(state) {
+    //   /* This event is fired whenever the player's state changes.
+    //      Possible values are:
+    //      - unstarted (-1)
+    //      - ended (0)
+    //      - playing (1)
+    //      - paused (2)
+    //      - buffering (3)
+    //      - video cued (5).
+    //      When the SWF is first loaded it will broadcast an unstarted (-1) event.
+    //      When the video is cued and ready to play it will broadcast a video cued event (5).
+    //   */
+    //
+    //   if (state == 1 || state == 2) {
+    //     alert('the "play" button *might* have been clicked');
+    //   }
+    //
+    // }
+
+  }
+
   render() {
     const { post } = this.state;
 
@@ -110,10 +140,12 @@ export default class Profile extends React.Component {
 
           <div className="profile-info">
             <div className="profile-info__fixed">
-              <h1 className="profile-info__name profile-animation">{post.name}</h1>
+              <h1 className="profile-info__name profile-animation">
+                <span>{post.name}</span>
+              </h1>
               <h3 className="profile-info__position profile-animation">{post.position.toUpperCase()}</h3>
             </div>
-            <p className="profile-info__content profile-animation" dangerouslySetInnerHTML={{ __html: post.description }} />
+            <p className="profile-info__content profile-animation" ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
           </div>
 
           <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
