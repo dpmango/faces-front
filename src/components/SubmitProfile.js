@@ -1,7 +1,6 @@
 import React from 'react';
 import api from '../constructor/Api'
 import { TweenMax, TimelineLite, Elastic } from 'gsap';
-import CKEditor from "react-ckeditor-component";
 
 import UnaFilter from '../filters/UnaFilter';
 import sprite from '../images/sprite.svg';
@@ -16,7 +15,7 @@ export default class submitProfile extends React.Component {
       loading: true,
       name: "",
       position: "",
-      description: 'content',
+      description: '#ДЕЛИСЬВЗГЛЯДОМ',
       photo: null,
       author_social: "",
       author_email: "",
@@ -33,7 +32,7 @@ export default class submitProfile extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   updateContent(newContent) {
@@ -169,14 +168,8 @@ export default class submitProfile extends React.Component {
 
               <div className="form-group">
                 <label htmlFor="description">Описание</label>
-                {/* <textarea type="text" id="description" name="description" required /> */}
-                <CKEditor
-                  activeClass="p10"
-                  content={this.state.description}
-                  events={{
-                    "change": this.updateContent
-                  }}
-                />
+                <textarea type="text" id="description" name="description" value={this.state.description} rows="10" onChange={this.handleChange} required />
+
               </div>
 
               <div className="submit__inner-btn">
