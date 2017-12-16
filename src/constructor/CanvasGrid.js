@@ -384,8 +384,18 @@ export default class CanvasGrid {
 
       if(e.type === 'tap' || e.type === 'press') {
         click.play();
-        const row = Math.floor((e.srcEvent.clientY - this.yMovement()) / this.squareSize);
-        const col = Math.floor((e.srcEvent.clientX - this.xMovement()) / this.squareSize);
+
+        var eventY, eventX;
+        if ( e.srcEvent.pageY !== undefined ){
+          eventY = e.srcEvent.pageY
+          eventX = e.srcEvent.pageX
+        } else {
+          eventY = e.srcEvent.clientY
+          eventX = e.srcEvent.clientX
+        }
+
+        const row = Math.floor((eventY - this.yMovement()) / this.squareSize);
+        const col = Math.floor((eventX - this.xMovement()) / this.squareSize);
 
         const gridImage = this.grid[row][col];
         this.redirectToProfile(gridImage.post.id);
@@ -441,8 +451,17 @@ export default class CanvasGrid {
 
     this.canvas.addEventListener('mousemove', throttle( (e) => {
 
-      const row = Math.floor((e.clientY - this.yMovement()) / this.squareSize);
-      const col = Math.floor((e.clientX - this.xMovement()) / this.squareSize);
+      var eventY, eventX;
+      if ( e.pageY !== undefined ){
+        eventY = e.pageY
+        eventX = e.pageX
+      } else {
+        eventY = e.clientY
+        eventX = e.clientX
+      }
+
+      const row = Math.floor((eventY - this.yMovement()) / this.squareSize);
+      const col = Math.floor((eventX - this.xMovement()) / this.squareSize);
 
       // wait till scroll/drag finnishing
       if ( !this.gridChangingPosition ){
