@@ -72,15 +72,15 @@ export default class CanvasGrid {
 
   sizeCanvas = () => {
     if ( window.innerWidth < 992 ){
-      this.squareSize = 175;
+      this.squareSize = 125;
     } else if ( window.innerWidth < 568 ) {
-      this.squareSize = 140;
+      this.squareSize = 100;
     } else {
-      this.squareSize = 225;
+      this.squareSize = 175;
     }
 
-    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 3);
-    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 3);
+    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 5);
+    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 5);
   }
 
   initializeGrid = () => {
@@ -115,40 +115,43 @@ export default class CanvasGrid {
     // console.log('Grid layout', this.grid)
   }
 
+  isCollapse = (row, col, width, height) => {
+    for (let currentRow = row; currentRow < row + width; currentRow++) {
+      const checkRow = this.grid[currentRow]
+
+      for (let currentCol = col; currentCol < col + height; currentCol++) {
+        if(checkRow && checkRow[currentCol]) return true
+      }
+    }
+
+    return false;
+  }
+
   fillSquare = (row, col) => {
     const options = [];
-    let maxRow = row + 3;
-    let maxCol = col + 3;
+    const maxRow = row + 5;
+    const maxCol = col + 5;
 
-    for (let currentRow = row; currentRow < maxRow; currentRow++) {
-      for (let currentCol = col; currentCol < maxCol; currentCol++) {
-        if (this.grid[currentRow] && this.grid[currentRow][currentCol] === false) {
+    for (let currentRow = row, currentCol = col; currentRow < maxRow && currentCol < maxCol; (currentRow++, currentCol++)) {
+      if (this.grid[currentRow] && this.grid[currentRow][currentCol] === false) {
 
-          let width = currentCol - col + 1;
-          let height = currentRow - row + 1;
+        let width = currentCol - col + 1;
+        let height = width;
+        console.log(this.isCollapse(row, col, width, height))
+        if (this.isCollapse(row, col, width, height)) continue;
 
-          // The bigger it is, the more chance it has of being chosen
-          for (let i = 0; i < width * height; i++) {
-            options.push({
-              width: width,
-              height: height
-            });
-          }
-        } else {
-          // I don't want to have L shaped images (or an img that covers part of another img) so I need to reduce the
-          // maxCol when there's a square already taken by an img
-          maxCol = currentCol;
+        // The bigger it is, the more chance it has of being chosen
+        for (let i = 0; i < width * height; i++) {
+          options.push({
+            width: width,
+            height: height
+          });
         }
       }
     }
 
-    const randomOption = this.random(0, options.length - 1);
 
-    // transform to square
-    options.forEach((opt) => {
-      opt.height = 1;
-      opt.width = 1;
-    });
+    const randomOption = this.random(0, options.length - 1);
 
     // All info about the img that's about to be drawn into the square(s)
     const gridImage = {
