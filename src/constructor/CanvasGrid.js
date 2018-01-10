@@ -137,7 +137,6 @@ export default class CanvasGrid {
 
         let width = currentCol - col + 1;
         let height = width;
-        console.log(this.isCollapse(row, col, width, height))
         if (this.isCollapse(row, col, width, height)) continue;
 
         // The bigger it is, the more chance it has of being chosen
