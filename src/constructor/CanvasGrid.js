@@ -1,6 +1,6 @@
 import Hammer from 'hammerjs';
 import { TweenMax } from 'gsap';
-import {throttle, debounce} from 'lodash';
+import {throttle, debounce, values} from 'lodash';
 
 import photoUrl from './photoUrl';
 import click from './clickSound';
@@ -51,6 +51,11 @@ export default class CanvasGrid {
     this.currentImage = 0;
     this.hoveredImage = {};
     this.gridImages = [];
+
+    this.hoverTweens = {
+      in: [],
+      out: [],
+    }
 
     this.sizeCanvas();
     this.dragCanvas();
@@ -299,28 +304,33 @@ export default class CanvasGrid {
         this.freezeGrid();
 
         if ( isHoverIn ){
-          TweenMax.to(imgProps, 1, {
+          const tween = TweenMax.to(imgProps, 1, {
               // cx: cx - 20,
               // cy: cy - 20,
               cw: cw,
               ch: ch,
               alpha: 0,
-              delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: function(that){
+              delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: () => {
                 // that.unFreezeGrid();
                 // img.isHoverAvailable = false;
+              this.delHoverTween('in', tween)
           }});
-        } else if ( isHoverOut ){
 
-          TweenMax.to(imgProps, 1, {
-              // cx: cx - 20,
-              // cy: cy - 20,
-              cw: cw / cropParam,
-              ch: ch / cropParam,
-              alpha: .7,
-              delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: function(that){
-                // that.unFreezeGrid();
-                // img.isHoverAvailable = false;
-          }});
+          this.addHoverTween('in', tween)
+        } else if ( isHoverOut ){
+          const tween = TweenMax.to(imgProps, 1, {
+						// cx: cx - 20,
+						// cy: cy - 20,
+						cw: cw / cropParam,
+						ch: ch / cropParam,
+						alpha: .7,
+						delay: 0, onUpdateParams: [this], onCompleteParams: [this], onUpdate: (that) => {drawImageFrame(that)}, onComplete: () => {
+							// that.unFreezeGrid();
+							// img.isHoverAvailable = false;
+							this.delHoverTween('out', tween)
+						}})
+
+          this.addHoverTween('out', tween)
         }
         img.isHoverAvailable = false;
 
@@ -362,6 +372,7 @@ export default class CanvasGrid {
     })
 
     hammer.on('panleft panright panup pandown panend tap press', (e) => {
+      this.finishHoverTweens()
 
       // reset render
       this.unFreezeGrid();
@@ -416,6 +427,7 @@ export default class CanvasGrid {
     let hasFinnishedScroll = false;
 
     this.canvas.addEventListener('wheel', (e) => {
+				this.finishHoverTweens()
 
       // reset render
       this.unFreezeGrid();
@@ -539,6 +551,20 @@ export default class CanvasGrid {
 
   removeGrid = () => {
     this.gridContainer.removeChild(this.canvas);
+  }
+
+  addHoverTween = (phase, tween) => {
+    this.hoverTweens[phase] = this.hoverTweens[phase].concat(tween);
+  }
+
+  delHoverTween = (phase, tween) => {
+    this.hoverTweens[phase] = this.hoverTweens[phase].filter((t) => (t !== tween));
+  }
+
+  finishHoverTweens = () => {
+    Object.keys(this.hoverTweens).forEach((phase) => {
+      this.hoverTweens[phase].forEach((tween) => (tween.progress(1)))
+    })
   }
 
 }
