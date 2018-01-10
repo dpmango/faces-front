@@ -89,8 +89,8 @@ export default class CanvasGrid {
   }
 
   initializeGrid = () => {
-    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 5;
-    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 5;
+    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 3;
+    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 3;
 
     // totalRows?? because its based on how many rows there will be
     for (let row = startRow; row <= (startRow + this.totalRows); row++) {
@@ -106,8 +106,8 @@ export default class CanvasGrid {
   }
 
   fillGrid = () => {
-    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 5;
-    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 5;
+    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 3;
+    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 3;
 
     for (let row = startRow; row <= (startRow + this.totalRows - 4); row++) {
       for (let col = startCol; col <= (startCol + this.totalCols - 4); col++) {
@@ -150,8 +150,8 @@ export default class CanvasGrid {
 
   fillSquare = (row, col) => {
     let options = [];
-    const maxRow = row + 5;
-    const maxCol = col + 5;
+    const maxRow = row + 3;
+    const maxCol = col + 3;
 
     for (let currentRow = row, currentCol = col; currentRow < maxRow && currentCol < maxCol; (currentRow++, currentCol++)) {
       if (this.grid[currentRow] && this.grid[currentRow][currentCol] === false) {
