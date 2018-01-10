@@ -39,20 +39,22 @@ export default class Grid extends React.Component {
   }
 
   setFilter = (filter) => {
-    this.setState({
-      activeFilter: filter
-    }, () => {
-      api.get('posts', {
-        params: {
-          filter: filter
-        },
-      }).then((res) => {
-        if ( res.data.length > 0 ){
-          this.canvasGrid.removeGrid();
-          this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
-        }
+    if (this.state.activeFilter !== filter){
+      this.setState({
+        activeFilter: filter
+      }, () => {
+        api.get('posts', {
+          params: {
+            filter: filter
+          },
+        }).then((res) => {
+          if ( res.data.length > 0 ){
+            this.canvasGrid.removeGrid();
+            this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+          }
+        });
       });
-    });
+    }
 
   }
 

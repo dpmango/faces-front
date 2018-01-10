@@ -4,7 +4,7 @@
   &__wrapper
     position: relative
     display: flex
-    min-height: 500px
+    // min-height: 500px
     height: 100vh
     max-height: 100vh
     padding: 100px 40px 20px 40px
@@ -56,9 +56,9 @@
       color: rgba(white, .6)
 
     &__content
-      flex: 1 1 auto
+      flex: 1 0 auto
       font-family: 'Open Sans', 'Roboto', sans-serif
-      overflow-y: auto
+      // overflow-y: auto
       margin-left: 50px
       max-width: 600px
       p
@@ -142,7 +142,20 @@
 +r($mobile)
   .profile
     &__wrapper
+      position: relative
       padding: 80px 20px 20px 20px
+    &-info
+      &__next
+        right: 30px
+        top: 100px
+        transform-origin: right bottom 0
+        transform: none
+      &__prev
+        left: 20px
+        top: 100px
+        transform-origin: left bottom 0
+        transform: none
+
     &-image
       margin-left: -20px
       margin-right: -20px

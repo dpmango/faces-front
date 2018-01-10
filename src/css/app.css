@@ -908,7 +908,7 @@ button:focus {
   transition: all 0.25s ease-in-out;
 }
 
-.btn-line:hover:after, .btn-line.is-active:after, .btn-line:focus:after {
+.btn-line.is-active:after {
   left: -5%;
   right: -5%;
 }
@@ -918,6 +918,11 @@ button:focus {
   padding: 7px 35px;
   -webkit-border-radius: 6px;
           border-radius: 6px;
+}
+
+.hasHover .btn-line:hover:after, .hasHover .btn-line:focus:after {
+  left: -5%;
+  right: -5%;
 }
 
 .icon {
@@ -1244,7 +1249,6 @@ button:focus {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  min-height: 500px;
   height: 100vh;
   max-height: 100vh;
   padding: 100px 40px 20px 40px;
@@ -1325,11 +1329,10 @@ button:focus {
 
 .profile-info__content {
   -webkit-box-flex: 1;
-  -webkit-flex: 1 1 auto;
-      -ms-flex: 1 1 auto;
-          flex: 1 1 auto;
+  -webkit-flex: 1 0 auto;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   font-family: 'Open Sans', 'Roboto', sans-serif;
-  overflow-y: auto;
   margin-left: 50px;
   max-width: 600px;
 }
@@ -1452,7 +1455,28 @@ button:focus {
 
 @media only screen and (max-width: 568px) {
   .profile__wrapper {
+    position: relative;
     padding: 80px 20px 20px 20px;
+  }
+  .profile-info__next {
+    right: 30px;
+    top: 100px;
+    -webkit-transform-origin: right bottom 0;
+        -ms-transform-origin: right bottom 0;
+            transform-origin: right bottom 0;
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
+  }
+  .profile-info__prev {
+    left: 20px;
+    top: 100px;
+    -webkit-transform-origin: left bottom 0;
+        -ms-transform-origin: left bottom 0;
+            transform-origin: left bottom 0;
+    -webkit-transform: none;
+        -ms-transform: none;
+            transform: none;
   }
   .profile-image {
     margin-left: -20px;
@@ -1870,6 +1894,7 @@ button:focus {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
+  font-family: 'Lazurski-Regular';
   -webkit-transition: all .3s ease;
   -o-transition: all .3s ease;
   transition: all .3s ease;
@@ -1878,6 +1903,11 @@ button:focus {
 .s-page__content p {
   font-size: 20px;
   line-height: 1.7;
+}
+
+.s-page__content code, .s-page__content kbd, .s-page__content samp {
+  font-style: normal;
+  font-family: 'Lazurski-Regular';
 }
 
 .s-page__title {
