@@ -1,6 +1,6 @@
 import Hammer from 'hammerjs';
 import { TweenMax } from 'gsap';
-import {throttle, debounce, values} from 'lodash';
+import {throttle, debounce, values, get} from 'lodash';
 
 import photoUrl from './photoUrl';
 import click from './clickSound';
@@ -84,13 +84,13 @@ export default class CanvasGrid {
       this.squareSize = 175;
     }
 
-    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 5);
-    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 5);
+    this.totalCols = Math.ceil((window.innerWidth / this.squareSize) + 10);
+    this.totalRows = Math.ceil((window.innerHeight / this.squareSize) + 10);
   }
 
   initializeGrid = () => {
-    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 3;
-    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 3;
+    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 5;
+    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 5;
 
     // totalRows?? because its based on how many rows there will be
     for (let row = startRow; row <= (startRow + this.totalRows); row++) {
@@ -106,11 +106,11 @@ export default class CanvasGrid {
   }
 
   fillGrid = () => {
-    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 3;
-    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 3;
+    const startRow = Math.floor(-this.yMovement() / this.squareSize) - 5;
+    const startCol = Math.floor(-this.xMovement() / this.squareSize) - 5;
 
-    for (let row = startRow; row <= (startRow + this.totalRows); row++) {
-      for (let col = startCol; col <= (startCol + this.totalCols); col++) {
+    for (let row = startRow; row <= (startRow + this.totalRows - 4); row++) {
+      for (let col = startCol; col <= (startCol + this.totalCols - 4); col++) {
         // false means there's no img in the current square
         if (this.grid[row][col] === false) {
           this.fillSquare(row, col);
@@ -132,8 +132,24 @@ export default class CanvasGrid {
     return false;
   }
 
+  isSameAsNear = (row, col, width, height) => {
+		const leftImageHeight = get(this.grid, `${row}.${col - 1}.height`, 0);
+		if (height === leftImageHeight) return true;
+
+		const upImageWidth = get(this.grid, `${row -1}.${col}.width`, 0);
+		if (width === upImageWidth) return true;
+
+		const bottomImageWidth = get(this.grid, `${row + height}.${col}.width`, 0);
+		if (width === bottomImageWidth) return true;
+
+		const rightImageHeight = get(this.grid, `${row}.${col + width}.height`, 0);
+		if (height === rightImageHeight) return true;
+
+		return false
+	}
+
   fillSquare = (row, col) => {
-    const options = [];
+    let options = [];
     const maxRow = row + 5;
     const maxCol = col + 5;
 
@@ -142,18 +158,24 @@ export default class CanvasGrid {
 
         let width = currentCol - col + 1;
         let height = width;
+
+        // check for near squares have the same side, for squares with side === 1 we make exclusion
+        if (height !== 1 && this.isSameAsNear(row, col, width, height)) continue;
+
+        // no overlapping one by one
         if (this.isCollapse(row, col, width, height)) continue;
 
-        // The bigger it is, the more chance it has of being chosen
-        for (let i = 0; i < width * height; i++) {
-          options.push({
-            width: width,
-            height: height
-          });
-        }
+				options.push({
+					width: width,
+					height: height,
+				});
       }
     }
 
+    // prefer to render a square with side > 1
+		if (options.length > 1) {
+    	options = options.slice(1);
+		}
 
     const randomOption = this.random(0, options.length - 1);
 
