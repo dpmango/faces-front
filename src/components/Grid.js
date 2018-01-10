@@ -48,6 +48,7 @@ export default class Grid extends React.Component {
             filter: filter
           },
         }).then((res) => {
+          console.log('got API responce with filter', res.data)
           if ( res.data.length > 0 ){
             this.canvasGrid.removeGrid();
             this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);

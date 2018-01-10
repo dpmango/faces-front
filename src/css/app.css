@@ -1361,6 +1361,10 @@ button:focus {
   display: none;
 }
 
+.profile-info__content .remove-videodetector {
+  display: none;
+}
+
 .profile-info__next, .profile-info__prev {
   position: fixed;
   color: white;
@@ -1557,6 +1561,7 @@ button:focus {
       -ms-transform: translateX(-50%);
           transform: translateX(-50%);
   text-align: center;
+  pointer-events: none;
 }
 
 .topbar__share-el {
@@ -1586,6 +1591,10 @@ button:focus {
   -webkit-transition-delay: .35s;
        -o-transition-delay: .35s;
           transition-delay: .35s;
+}
+
+.topbar__share.is-active {
+  pointer-events: all;
 }
 
 .topbar__share.is-active .topbar__share-el {

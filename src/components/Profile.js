@@ -14,6 +14,7 @@ export default class Profile extends React.Component {
 
     this.state = {
       post: null,
+      muteAudio: false
     }
   }
 
@@ -21,10 +22,6 @@ export default class Profile extends React.Component {
     const postId = this.props.match.params.uuid;
 
     this.getProfile(postId);
-  }
-
-  componentDidMount(){
-    this.hookYoutube();
   }
 
   getProfile = (postId, delay) =>{
@@ -48,6 +45,7 @@ export default class Profile extends React.Component {
 
         setTimeout(function(){
           _that.animateTransition();
+          _that.hookYoutube();
         }, delay + 300);
 
       } else {
@@ -55,6 +53,7 @@ export default class Profile extends React.Component {
           post: post.data
         });
         this.animateTransition();
+        this.hookYoutube();
       }
 
     });
@@ -114,29 +113,42 @@ export default class Profile extends React.Component {
   }
 
   hookYoutube = () => {
+    var element = document.querySelector('iframe')
 
-    // let contentEl = this.contentEl
-    // contentEl.addEventListener('onStateChange', 'player_state_changed');
-    //
-    // function player_state_changed(state) {
-    //   /* This event is fired whenever the player's state changes.
-    //      Possible values are:
-    //      - unstarted (-1)
-    //      - ended (0)
-    //      - playing (1)
-    //      - paused (2)
-    //      - buffering (3)
-    //      - video cued (5).
-    //      When the SWF is first loaded it will broadcast an unstarted (-1) event.
-    //      When the video is cued and ready to play it will broadcast a video cued event (5).
-    //   */
-    //
-    //   if (state == 1 || state == 2) {
-    //     alert('the "play" button *might* have been clicked');
-    //   }
-    //
-    // }
+    console.log(element)
 
+    element.setAttribute('src', element.getAttribute('src') + "version=3&enablejsapi=1")
+    element.contentDocument.addEventListener('onStateChange', 'player_state_changed');
+
+    element.contentDocument.addEventListener('click', function(){
+      // alert('click')
+    })
+
+    function player_state_changed(state) {
+      /* This event is fired whenever the player's state changes.
+         Possible values are:
+         - unstarted (-1)
+         - ended (0)
+         - playing (1)
+         - paused (2)
+         - buffering (3)
+         - video cued (5).
+         When the SWF is first loaded it will broadcast an unstarted (-1) event.
+         When the video is cued and ready to play it will broadcast a video cued event (5).
+      */
+      console.log(state)
+      if (state == 1 || state == 2) {
+        alert('the "play" button *might* have been clicked');
+      }
+
+    }
+
+  }
+
+  muteAudio = () => {
+    this.setState({
+      muteAudio: true
+    })
   }
 
   render() {
@@ -158,7 +170,7 @@ export default class Profile extends React.Component {
 
     return (
       <div className="profile">
-        <Topbar shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
+        <Topbar audio={this.state.muteAudio} shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>
@@ -172,7 +184,7 @@ export default class Profile extends React.Component {
               </h1>
               <h3 className="profile-info__position profile-animation">{post.position.toUpperCase()}</h3>
             </div>
-            <p className="profile-info__content profile-animation" ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
+            <p className="profile-info__content profile-animation" onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
           </div>
 
           <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
