@@ -47,7 +47,7 @@ export default class Topbar extends React.Component {
     }
 
     if (!hasTouch()) {
-      document.body.className += ' hasHover';
+      document.body.className = 'hasHover';
     }
 
     if ( !this.state.audioPlaying ){

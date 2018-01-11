@@ -1,6 +1,7 @@
 import React from 'react';
 import api from '../constructor/Api';
 import { Link, withRouter } from 'react-router-dom';
+import {Helmet} from "react-helmet";
 
 import { TweenMax, Back } from 'gsap';
 
@@ -170,6 +171,11 @@ export default class Profile extends React.Component {
 
     return (
       <div className="profile">
+        <Helmet>
+          <title>{post.seo_title || post.name} || HD VISIONS</title>
+          <meta name="keywords" content={post.seo_keywords} />
+          <meta name="description" content={post.seo_description} />
+        </Helmet>
         <Topbar audio={this.state.muteAudio} shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
