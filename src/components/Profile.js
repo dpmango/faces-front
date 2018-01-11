@@ -29,7 +29,6 @@ export default class Profile extends React.Component {
     api.get(`posts/${postId}`, {
       context: this
     }).then(post => {
-
       if ( delay ){
         let _that = this;
         let cacheImg = post.data.photo.url;
@@ -77,13 +76,15 @@ export default class Profile extends React.Component {
   }
 
   prevProfile = () => {
-    let nextPost = this.state.post.id - 1;
-    this.getProfile(nextPost, 1000);
+    let prevPost = this.state.post.prev_post.id
+    // let nextPost = this.state.post.id - 1;
+    this.getProfile(prevPost, 1000);
     this.hoverOutLink();
   }
 
   nextProfile = () => {
-    let nextPost = this.state.post.id + 1;
+    let nextPost = this.state.post.next_post.id
+    // let nextPost = this.state.post.id + 1;
     this.getProfile(nextPost, 1000);
     this.hoverOutLink();
   }
