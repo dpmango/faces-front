@@ -35,7 +35,7 @@ export default class Profile extends React.Component {
 
         this.animateBack();
 
-        this.props.history.push('/grid/' + postId )
+        this.props.history.push('/profile/' + postId )
 
         setTimeout(function(){
           _that.setState({
