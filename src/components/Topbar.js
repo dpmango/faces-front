@@ -29,6 +29,7 @@ export default class Topbar extends React.Component {
     this.state = {
       opened: false,
       sharing: false,
+      backGridCategory: 'grid',
       audioPlaying: false
     }
     this.bgAudio = new Howl({
@@ -56,6 +57,13 @@ export default class Topbar extends React.Component {
         audioPlaying: true
       })
     }
+
+    if ( this.props.category ){
+      this.setState({
+        backGridCategory: this.props.category
+      })
+    }
+
   }
 
   componentWillReceiveProps(nextProps){
@@ -65,6 +73,12 @@ export default class Topbar extends React.Component {
         sharing: false
       })
     // }
+
+    if ( nextProps.category ){
+      this.setState({
+        backGridCategory: nextProps.category
+      })
+    }
 
     if ( nextProps.audio === true ){
       this.bgAudio.stop();
@@ -132,7 +146,7 @@ export default class Topbar extends React.Component {
         <Link className="topbar__logo" to="/grid">
           <img src={logo} alt="logo"/>
         </Link>
-        <Link className="topbar__nav topbar__back-grid btn btn-line" to="/grid">
+        <Link className="topbar__nav topbar__back-grid btn btn-line" to={`/grid/${this.state.backGridCategory}`}>
           <span>НАЗАД</span>
         </Link>
         <div className={`topbar__nav btn btn-line ${this.state.sharing ? 'is-active' : ''} `}>

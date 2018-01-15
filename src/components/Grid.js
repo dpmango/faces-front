@@ -16,25 +16,34 @@ export default class Grid extends React.Component {
   }
 
   componentDidMount() {
-    api.get('posts', {
-      data: {},
-    }).then((res) => {
-      console.log('got API responce', res.data)
-      this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
-    });
+    if ( this.props.match.params.filter ){
+      this.setFilter(this.props.match.params.filter)
+    } else {
+      api.get('posts', {
+        data: {},
+      }).then((res) => {
+        console.log('got API responce', res.data)
+        this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+      });
+    }
   }
 
   componentWillUnmount() {
     this.canvasGrid.stopGrid();
   }
 
+  componentWillReceiveProps(nextProps){
+    if ( nextProps.match.params.filter ){
+      this.setFilter(nextProps.match.params.filter)
+    }
+  }
   redirectToCard = (postId) => {
     this.setState({
       transitioning: true
     });
 
     setTimeout(() => {
-      this.props.history.push(`/grid/${postId}`);
+      this.props.history.push(`/profile/${postId}`);
     }, 500);
   }
 
@@ -50,7 +59,9 @@ export default class Grid extends React.Component {
         }).then((res) => {
           console.log('got API responce with filter', res.data)
           if ( res.data.length > 0 ){
-            this.canvasGrid.removeGrid();
+            if ( this.canvasGrid ){
+              this.canvasGrid.removeGrid();
+            }
             this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
           }
         });

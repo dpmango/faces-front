@@ -117,7 +117,7 @@ export default class Profile extends React.Component {
   hookYoutube = () => {
     var element = document.querySelector('iframe')
 
-    console.log(element)
+    // console.log(element)
 
     element.setAttribute('src', element.getAttribute('src') + "version=3&enablejsapi=1")
     element.contentDocument.addEventListener('onStateChange', 'player_state_changed');
@@ -138,7 +138,6 @@ export default class Profile extends React.Component {
          When the SWF is first loaded it will broadcast an unstarted (-1) event.
          When the video is cued and ready to play it will broadcast a video cued event (5).
       */
-      console.log(state)
       if (state == 1 || state == 2) {
         alert('the "play" button *might* have been clicked');
       }
@@ -177,7 +176,7 @@ export default class Profile extends React.Component {
           <meta name="keywords" content={post.seo_keywords} />
           <meta name="description" content={post.seo_description} />
         </Helmet>
-        <Topbar audio={this.state.muteAudio} shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
+        <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>

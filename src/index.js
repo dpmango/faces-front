@@ -27,8 +27,9 @@ class Root extends React.Component {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Intro} />
-            <Route exact path="/grid" component={Grid} />
-            <Route path="/grid/:uuid" component={Profile} />
+            <Route exact path="/grid/" component={Grid} />
+            <Route path="/grid/:filter" component={Grid} />
+            <Route path="/profile/:uuid" component={Profile} />
             <Route path="/form" component={SubmitProfile} />
             <Route path="/:pagename" component={Page} />
           </Switch>
