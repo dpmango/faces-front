@@ -155,14 +155,14 @@ export default class Topbar extends React.Component {
             <VKShareButton className="topbar__share-el btn btn-line" url={share.url} title={share.title} description={share.description} image={share.photo}>
               <span>Вконтакте</span>
             </VKShareButton>
-            <FacebookShareButton className="topbar__share-el btn btn-line" url={share.url}>
+            <FacebookShareButton className="topbar__share-el btn btn-line" url={share.url} quote={share.description}>
               <span>Facebook</span>
             </FacebookShareButton>
             <TwitterShareButton className="topbar__share-el btn btn-line" url={share.url} hashtags={['hdvisions']}>
               <span>Twitter</span>
             </TwitterShareButton>
             <Link className="topbar__share-el btn btn-line" to='/form'>
-              <span>#ДЕЛИСЬВЗГЛЯДОМ</span>
+              <span>Поделиться взглядом</span>
             </Link>
 
           </div>
@@ -188,8 +188,18 @@ export default class Topbar extends React.Component {
                 </Link>
               </div>
               <div className="menu__li">
-                <Link className="btn btn-line" to='/form'>
+                <Link className="btn btn-line" to='/grid/hero'>
+                  <span>HERO</span>
+                </Link>
+              </div>
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/grid/sharevision'>
                   <span>#ДЕЛИСЬВЗГЛЯДОМ</span>
+                </Link>
+              </div>
+              <div className="menu__li">
+                <Link className="btn btn-line" to='/form'>
+                  <span>Поделиться взглядом</span>
                 </Link>
               </div>
               <div className="menu__li">

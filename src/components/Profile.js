@@ -31,22 +31,24 @@ export default class Profile extends React.Component {
     }).then(post => {
       if ( delay ){
         let _that = this;
-        let cacheImg = post.data.photo.url;
+        let cacheImg = new Image();
+        cacheImg.onload = () => {
+          setTimeout(function(){
+            _that.setState({
+              post: post.data
+            });
+          }, delay);
+
+          setTimeout(function(){
+            _that.animateTransition();
+            _that.hookYoutube();
+          }, delay + 300);
+        }
+        cacheImg.src = post.data.photo.url;
 
         this.animateBack();
 
         this.props.history.push('/profile/' + postId )
-
-        setTimeout(function(){
-          _that.setState({
-            post: post.data
-          });
-        }, delay);
-
-        setTimeout(function(){
-          _that.animateTransition();
-          _that.hookYoutube();
-        }, delay + 300);
 
       } else {
         this.setState({
@@ -78,14 +80,14 @@ export default class Profile extends React.Component {
   prevProfile = () => {
     let prevPost = this.state.post.prev_post.id
     // let nextPost = this.state.post.id - 1;
-    this.getProfile(prevPost, 1000);
+    this.getProfile(prevPost, 700);
     this.hoverOutLink();
   }
 
   nextProfile = () => {
     let nextPost = this.state.post.next_post.id
     // let nextPost = this.state.post.id + 1;
-    this.getProfile(nextPost, 1000);
+    this.getProfile(nextPost, 700);
     this.hoverOutLink();
   }
 
@@ -118,13 +120,16 @@ export default class Profile extends React.Component {
     var element = document.querySelector('iframe')
 
     // console.log(element)
+    element.setAttribute('allowfullscreen', "1")
 
     element.setAttribute('src', element.getAttribute('src') + "version=3&enablejsapi=1")
-    element.contentDocument.addEventListener('onStateChange', 'player_state_changed');
+    if (element){
+      element.contentDocument.addEventListener('onStateChange', 'player_state_changed');
 
-    element.contentDocument.addEventListener('click', function(){
-      // alert('click')
-    })
+      element.contentDocument.addEventListener('click', function(){
+        // alert('click')
+      })
+    }
 
     function player_state_changed(state) {
       /* This event is fired whenever the player's state changes.
@@ -152,6 +157,33 @@ export default class Profile extends React.Component {
     })
   }
 
+  renderPrevBtn = () => {
+    if (this.state.post.prev_post){
+      return(
+        <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
+          <div className="btn btn-line">
+            <span>Предыдущий</span>
+          </div>
+        </div>
+      )
+    } else {
+      return
+    }
+  }
+  renderNextBtn = () => {
+    if (this.state.post.next_post){
+      return(
+        <div className="profile-info__next" onClick={this.nextProfile.bind(this)}>
+          <div className="btn btn-line">
+            <span>Следующий</span>
+          </div>
+        </div>
+      )
+    } else {
+      return
+    }
+  }
+
   render() {
     const { post } = this.state;
 
@@ -176,7 +208,7 @@ export default class Profile extends React.Component {
           <meta name="keywords" content={post.seo_keywords} />
           <meta name="description" content={post.seo_description} />
         </Helmet>
-        <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.name} shareDescription={post.description} shareImage={post.photo}/>
+        <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.seo_title || post.name} shareDescription={post.seo_keywords || post.description} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>
@@ -192,18 +224,19 @@ export default class Profile extends React.Component {
             </div>
             <p className="profile-info__content profile-animation" onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
           </div>
-
-          <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
+          {this.renderPrevBtn()}
+          {this.renderNextBtn()}
+          {/* <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
             <div className="btn btn-line">
-              <span>Предидущий</span>
+              <span>Предыдущий</span>
             </div>
           </div>
-
           <div className="profile-info__next" onClick={this.nextProfile.bind(this)}>
             <div className="btn btn-line">
               <span>Следующий</span>
             </div>
-          </div>
+          </div> */}
+
         </div>
       </div>
     );

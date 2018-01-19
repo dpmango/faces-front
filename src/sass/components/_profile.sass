@@ -4,16 +4,18 @@
   &__wrapper
     position: relative
     display: flex
+    align-items: flex-start
     // min-height: 500px
-    height: 100vh
-    max-height: 100vh
+    // height: 100vh
+    // max-height: 100vh
+    min-height: 100vh
     padding: 100px 40px 20px 40px
 
   &-image
     position: relative
     overflow: hidden
     flex: 0 1 50%
-    margin: auto 0
+    // margin: auto 0
     width: 50%
     // max-height: 500px
     opacity: 0
@@ -148,11 +150,13 @@
       padding: 80px 20px 20px 20px
     &-info
       &__next
+        position: absolute
         right: 30px
         top: 100px
         transform-origin: right bottom 0
         transform: none
       &__prev
+        position: absolute
         left: 20px
         top: 100px
         transform-origin: left bottom 0
