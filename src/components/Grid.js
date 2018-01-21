@@ -16,6 +16,7 @@ export default class Grid extends React.Component {
   }
 
   componentDidMount() {
+    console.log('filter param for grid', this.props.match.params.filter)
     if ( this.props.match.params.filter ){
       this.setFilter(this.props.match.params.filter)
     } else {

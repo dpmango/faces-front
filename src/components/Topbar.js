@@ -189,7 +189,7 @@ export default class Topbar extends React.Component {
               </div>
               <div className="menu__li">
                 <Link className="btn btn-line" to='/grid/hero'>
-                  <span>HERO</span>
+                  <span>ГЕРОИ</span>
                 </Link>
               </div>
               <div className="menu__li">
