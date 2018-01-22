@@ -15,7 +15,7 @@ export default class submitProfile extends React.Component {
       loading: true,
       name: "",
       position: "",
-      description: '#ДЕЛИСЬВЗГЛЯДОМ',
+      description: '',
       photo: null,
       author_social: "",
       author_email: "",
@@ -139,44 +139,48 @@ export default class submitProfile extends React.Component {
     return (
       <div className="submit">
         <Topbar />
-        <div className="submit__wrapper">
-          <div className="submit__image">
-            <div className="submit__image-text">Отправьте свой материал к нам на рассмотрение. В случае одобрения, он будет опубликован на сайте в категории #ДЕЛИСЬВЗГЛЯДОМ</div>
-            <label className={`submit__image-preview ${this.state.photo ? 'is-chosen' : ''} `} htmlFor="change-img">
-              <img src={this.state.photo} />
-              <div className="submit__image-placeholder">
-                <svg className="ico ico-upload">
-                  <use xlinkHref={sprite + "#ico-upload"} />
-                </svg>
-                <span>Загрузить изображение</span>
-              </div>
-            </label>
-            <input type="file" className="submit__image-file-input" id="change-img" name="change-img" onChange={(e) => this.changeImage(e)} />
-          </div>
+        <div className="submit__container">
+          <div className="submit__image-text">Отправьте нам свою фотографию, на которой обязательно должны быть изображены глаза и брови и поделитесь своим Взглядом. Расскажите, какое событие за повлияло на вас? Возможно именно вы станете частью вселенной! Не забудьте поставить #делисьвзглядом</div>
+          <div className="submit__wrapper">
+            <div className="submit__image">
+              <label className={`submit__image-preview ${this.state.photo ? 'is-chosen' : ''} `} htmlFor="change-img">
+                <img src={this.state.photo} />
+                <div className="submit__image-placeholder">
+                  <svg className="ico ico-upload">
+                    <use xlinkHref={sprite + "#ico-upload"} />
+                  </svg>
+                  <span>Загрузить изображение</span>
+                </div>
+              </label>
+              <input type="file" className="submit__image-file-input" id="change-img" name="change-img" onChange={(e) => this.changeImage(e)} />
+            </div>
 
-          <div className="submit__inner">
-            <form onSubmit={(e) => this.submitProfile(e)}>
-              <div className="form-group">
-                <label htmlFor="name">ФИО</label>
-                <input type="text" id="name" name="name" placeholder="Николай Гоголь" value={this.state.name} onChange={this.handleChange} required />
-              </div>
+            <div className="submit__inner">
+              <form onSubmit={(e) => this.submitProfile(e)}>
+                <div className="form-group">
+                  <label htmlFor="name">ФИО</label>
+                  <input type="text" id="name" name="name" placeholder="Николай Гоголь" value={this.state.name} onChange={this.handleChange} required />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="position">Вид деятельности</label>
-                <input type="text" id="position" name="position" placeholder="Вид деятельности" value={this.state.position} onChange={this.handleChange} />
-              </div>
+                <div className="form-group">
+                  <label htmlFor="position">Вид деятельности</label>
+                  <input type="text" id="position" name="position" placeholder="Вид деятельности" value={this.state.position} onChange={this.handleChange} />
+                </div>
 
-              <div className="form-group">
-                <label htmlFor="description">Описание</label>
-                <textarea type="text" id="description" name="description" value={this.state.description} rows="10" onChange={this.handleChange} required />
+                <div className="form-group">
+                  <label htmlFor="description">Описание</label>
+                  <textarea type="text" id="description" name="description" placeholder="Поделитесь с нами своим Взглядом" value={this.state.description} rows="10" onChange={this.handleChange} required />
 
-              </div>
+                </div>
 
-              <div className="submit__inner-btn">
-                <button className="btn btn-submit">Загрузить</button>
-              </div>
+                <div className="submit__inner-btn">
+                  <button className="btn btn-line">
+                    <span>Загрузить</span>
+                  </button>
+                </div>
 
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

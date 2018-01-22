@@ -88,7 +88,8 @@
       color: white
       cursor: pointer
       .btn
-        font-size: 15px
+        font-size: 16px
+        text-transform: uppercase
 
     &__next
       right: 30px
@@ -96,8 +97,8 @@
       transform-origin: right bottom 0
       transform: rotate(90deg)
     &__prev
-      left: 20px
-      top: calc(50% - 4px)
+      left: 10px
+      top: calc(50% - 40px)
       transform-origin: left bottom 0
       transform: rotate(90deg)
 
@@ -149,6 +150,8 @@
       position: relative
       padding: 80px 20px 20px 20px
     &-info
+      &__next, &__prev
+        font-size: 15px
       &__next
         position: absolute
         right: 30px

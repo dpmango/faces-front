@@ -469,6 +469,7 @@ export default class CanvasGrid {
       } else if ( e.deltaY > 0){
         delta = -Math.abs(e.deltaY);
       }
+      delta = delta / 2.5
 
       this.delta.y = delta;
       this.offset.y += this.delta.y;

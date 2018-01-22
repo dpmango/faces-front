@@ -856,6 +856,7 @@ body, html {
 }
 
 button {
+  display: inline-block;
   -webkit-apperance: none;
   border: 0;
   -webkit-box-shadow: none;
@@ -1127,6 +1128,7 @@ button:focus {
 .grid-container {
   cursor: -webkit-grabbing;
   cursor: grabbing;
+  font-size: 0;
 }
 
 .grid-transition {
@@ -1154,8 +1156,8 @@ button:focus {
 
 .grid-filter {
   position: fixed;
-  top: 60px;
-  left: 40px;
+  top: 50px;
+  left: 30px;
   z-index: 11;
   display: -webkit-box;
   display: -webkit-flex;
@@ -1183,6 +1185,12 @@ button:focus {
   text-transform: uppercase;
   display: inline-block;
   margin-right: 40px;
+  padding: 10px;
+}
+
+.grid-filter span.is-active:after, .grid-filter span:hover:after, .grid-filter span:focus:after {
+  left: 5px;
+  right: 5px;
 }
 
 .grid-filter span:last-child {
@@ -1191,23 +1199,23 @@ button:focus {
 
 @media only screen and (max-width: 992px) {
   .grid-filter span {
-    margin-right: 30px;
+    margin-right: 20px;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .grid-filter span {
-    margin-right: 20px;
+    margin-right: 10px;
   }
 }
 
 @media only screen and (max-width: 568px) {
   .grid-filter {
-    top: 51px;
-    left: 20px;
+    top: 41px;
+    left: 10px;
   }
   .grid-filter span {
-    font-size: 14px;
+    font-size: 15px;
   }
   .grid-filter span:last-child {
     margin-right: 0;
@@ -1216,7 +1224,7 @@ button:focus {
 
 @media only screen and (max-width: 460px) {
   .grid-filter {
-    top: 20px;
+    top: 0px;
     -webkit-transform: rotate(90deg);
         -ms-transform: rotate(90deg);
             transform: rotate(90deg);
@@ -1374,7 +1382,8 @@ button:focus {
 }
 
 .profile-info__next .btn, .profile-info__prev .btn {
-  font-size: 15px;
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 .profile-info__next {
@@ -1390,9 +1399,9 @@ button:focus {
 }
 
 .profile-info__prev {
-  left: 20px;
-  top: -webkit-calc(50% - 4px);
-  top: calc(50% - 4px);
+  left: 10px;
+  top: -webkit-calc(50% - 40px);
+  top: calc(50% - 40px);
   -webkit-transform-origin: left bottom 0;
       -ms-transform-origin: left bottom 0;
           transform-origin: left bottom 0;
@@ -1464,6 +1473,9 @@ button:focus {
     position: relative;
     padding: 80px 20px 20px 20px;
   }
+  .profile-info__next, .profile-info__prev {
+    font-size: 15px;
+  }
   .profile-info__next {
     position: absolute;
     right: 30px;
@@ -1499,6 +1511,7 @@ button:focus {
   top: 30px;
   right: 40px;
   left: 40px;
+  min-height: 78px;
   z-index: 10;
   color: white;
   background: transparent;
@@ -1510,6 +1523,10 @@ button:focus {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   opacity: 0;
   pointer-events: none;
   -webkit-transition: all .3s .3s ease;
@@ -1524,6 +1541,7 @@ button:focus {
 
 .topbar__back-grid {
   opacity: 0;
+  margin-right: auto;
   -webkit-transition: all .3s ease;
   -o-transition: all .3s ease;
   transition: all .3s ease;
@@ -1967,6 +1985,25 @@ button:focus {
   margin: 0 auto;
 }
 
+.submit__container {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 100px 40px 20px 40px;
+  color: white;
+  min-height: 100vh;
+}
+
 .submit__wrapper {
   position: relative;
   display: -webkit-box;
@@ -1977,9 +2014,6 @@ button:focus {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-  min-height: 100vh;
-  padding: 100px 40px 20px 40px;
-  color: white;
 }
 
 .submit__image {
@@ -1992,9 +2026,14 @@ button:focus {
 }
 
 .submit__image-text {
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   font-size: 18px;
   line-height: 1.5;
+  text-align: center;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .submit__image-preview {
@@ -2002,10 +2041,8 @@ button:focus {
   position: relative;
   overflow: hidden;
   height: 300px;
-  background: rgba(255, 255, 255, 0.05);
   -webkit-border-radius: 20px;
           border-radius: 20px;
-  border: 2px dashed rgba(255, 255, 255, 0.3);
   cursor: pointer;
   -webkit-transition: all 0.25s ease-in-out;
   -o-transition: all 0.25s ease-in-out;
@@ -2014,6 +2051,7 @@ button:focus {
 
 .submit__image-preview:hover, .submit__image-preview:focus {
   border-color: white;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .submit__image-preview img {
@@ -2098,7 +2136,13 @@ button:focus {
 
 .submit__inner-btn {
   margin-top: 30px;
+  margin-bottom: 20px;
   text-align: center;
+}
+
+.submit__inner-btn .btn {
+  background: transparent;
+  color: white;
 }
 
 .form-group {
@@ -2120,8 +2164,8 @@ button:focus {
   display: block;
   width: 100%;
   color: white;
-  -webkit-border-radius: 4px;
-          border-radius: 4px;
+  -webkit-border-radius: 0px;
+          border-radius: 0px;
   padding: 10px;
   background: none;
   border: 1px solid #6D6875;

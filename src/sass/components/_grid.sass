@@ -3,6 +3,7 @@
   position: relative
   &-container
     cursor: grabbing
+    font-size: 0
 
   &-transition
     position: absolute
@@ -23,8 +24,8 @@
 
   &-filter
     position: fixed
-    top: 60px
-    left: 40px
+    top: 50px
+    left: 30px
     // bottom: 20px
     // right: 55px
     z-index: 11
@@ -44,8 +45,11 @@
       text-transform: uppercase
       display: inline-block
       margin-right: 40px
-      &.is-active
-
+      padding: 10px
+      &.is-active, &:hover
+        &:after
+          left: 5px
+          right: 5px
       &:last-child
         margin-right: 0
 
@@ -53,27 +57,27 @@
   .grid
     &-filter
       span
-        margin-right: 30px
+        margin-right: 20px
 +r($tablet)
   .grid
     &-filter
       span
-        margin-right: 20px
+        margin-right: 10px
 
 +r($mobile)
   .grid
     &-filter
-      top: 51px
-      left: 20px
+      top: 41px
+      left: 10px
       span
-        font-size: 14px
+        font-size: 15px
         &:last-child
           margin-right: 0
 
 +r(460)
   .grid
     &-filter
-      top: 20px
+      top: 0px
       transform: rotate(90deg)
       float: left
       transform-origin: left bottom 0

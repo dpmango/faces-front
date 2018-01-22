@@ -10,6 +10,7 @@ export default class Grid extends React.Component {
     super();
 
     this.state = {
+      loaded: false,
       transitioning: false,
       activeFilter: 'universe'
     }
@@ -24,7 +25,11 @@ export default class Grid extends React.Component {
         data: {},
       }).then((res) => {
         console.log('got API responce', res.data)
+        this.setState({
+          loaded: true
+        });
         this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+
       });
     }
   }
@@ -63,7 +68,11 @@ export default class Grid extends React.Component {
             if ( this.canvasGrid ){
               this.canvasGrid.removeGrid();
             }
+            this.setState({
+              loaded: true
+            });
             this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+
           }
         });
       });
@@ -72,6 +81,19 @@ export default class Grid extends React.Component {
   }
 
   render() {
+    if (!this.state.loaded) {
+      return (
+        <div className="page-loading">
+          <div className='preloader-squares'>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+            <div className='square'></div>
+          </div>
+          <p className="preloader-name">Загрузка...</p>
+        </div>
+      )
+    }
     return (
       <div className="grid">
         <Topbar />

@@ -143,9 +143,9 @@ export default class Topbar extends React.Component {
 
     return(
       <div className="topbar">
-        <Link className="topbar__logo" to="/grid">
+        {/* <Link className="topbar__logo" to="/grid">
           <img src={logo} alt="logo"/>
-        </Link>
+        </Link> */}
         <Link className="topbar__nav topbar__back-grid btn btn-line" to={`/grid/${this.state.backGridCategory}`}>
           <span>НАЗАД</span>
         </Link>
