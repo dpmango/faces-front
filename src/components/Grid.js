@@ -35,6 +35,7 @@ export default class Grid extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    console.log('component recived props', nextProps.match.params.filter)
     if ( nextProps.match.params.filter ){
       this.setFilter(nextProps.match.params.filter)
     }
@@ -50,27 +51,29 @@ export default class Grid extends React.Component {
   }
 
   setFilter = (filter) => {
+    // console.log("this.state.activeFilter !== filter", this.state.activeFilter !== filter)
     if (this.state.activeFilter !== filter){
-      this.setState({
-        activeFilter: filter,
-        loaded: false
-      }, () => {
-        api.get('posts', {
-          params: {
-            filter: filter
-          },
-        }).then((res) => {
-          console.log('got API responce with filter', res.data)
-          if ( res.data.length > 0 ){
-            if ( this.canvasGrid ){
-              this.canvasGrid.removeGrid();
-            }
-            this.apiDone(res.data);
-            // this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
-          }
-        });
-      });
+
     }
+    this.setState({
+      activeFilter: filter,
+      loaded: false
+    }, () => {
+      api.get('posts', {
+        params: {
+          filter: filter
+        },
+      }).then((res) => {
+        console.log('got API responce with filter', res.data)
+        if ( res.data.length > 0 ){
+          if ( this.canvasGrid ){
+            this.canvasGrid.removeGrid();
+          }
+          this.apiDone(res.data);
+          // this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
+        }
+      });
+    });
   }
 
   apiDone = (data) => {
@@ -121,7 +124,7 @@ export default class Grid extends React.Component {
       <div className="grid">
         <Topbar />
         <div className="grid-filter">
-          <span className={`btn btn-line ${this.state.activeFilter === "universe" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'universe')} >Universe</span>
+          <span className={`btn btn-line ${this.state.activeFilter === "universe" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'universe')} >ВСЕЛЕННАЯ</span>
           <span className={`btn btn-line ${this.state.activeFilter === "hero" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'hero')} >Герои</span>
           <span className={`btn btn-line ${this.state.activeFilter === "sharevision" ? 'is-active' : ''} `} onClick={this.setFilter.bind(this, 'sharevision')} >#ДЕЛИСЬВЗГЛЯДОМ</span>
         </div>

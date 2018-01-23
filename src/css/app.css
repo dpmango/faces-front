@@ -1683,6 +1683,7 @@ button:focus {
   background: rgba(0, 0, 0, 0.8);
   opacity: 0;
   pointer-events: none;
+  text-transform: uppercase;
   -webkit-transition: opacity .3s ease;
   -o-transition: opacity .3s ease;
   transition: opacity .3s ease;
