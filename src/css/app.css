@@ -1355,6 +1355,36 @@ button:focus {
   line-height: 1.67;
 }
 
+.profile-info__content p a {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.profile-info__content p a:after {
+  display: inline-block;
+  content: ' ';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  left: 50%;
+  right: 50%;
+  background: currentColor;
+  height: 2px;
+  -webkit-transition: all 0.25s ease-in-out;
+  -o-transition: all 0.25s ease-in-out;
+  transition: all 0.25s ease-in-out;
+}
+
+.profile-info__content p a.is-active:after, .profile-info__content p a:hover:after, .profile-info__content p a:focus:after {
+  left: -5%;
+  right: -5%;
+}
+
 .profile-info .videodetector, .profile-info__video {
   position: relative;
   height: 0;

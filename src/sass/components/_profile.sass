@@ -66,6 +66,29 @@
       p
         font-size: 17px
         line-height: 1.67
+        a
+          display: inline-block
+          position: relative
+          text-align: center
+          cursor: pointer
+          position: relative
+          &::after
+            display: inline-block
+            content: ' '
+            position: absolute
+            z-index: -1
+            top: 50%
+            transform: translate3d(0,-50%,0)
+            left: 50%
+            right: 50%
+            background: currentColor
+            height: 2px
+            transition: all $transitionSpeed $ease
+          &.is-active, &:hover
+
+            &::after
+              left: -5%
+              right: -5%
     .videodetector, &__video
       position: relative
       height: 0

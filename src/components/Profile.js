@@ -218,6 +218,11 @@ export default class Profile extends React.Component {
           <title>{post.seo_title || post.name} || HD VISIONS</title>
           <meta name="keywords" content={post.seo_keywords} />
           <meta name="description" content={post.seo_description} />
+          <meta property="og:type" content="article">
+          <meta property="og:title" content={post.seo_title || post.name}>
+          <meta property="og:url" content={window.location.href}>
+          <meta property="og:description" name="description" content={post.seo_description}>
+          <meta property="og:image" content={post.photo.thumb.url}>
         </Helmet>
         <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.seo_title || post.name} shareDescription={post.seo_keywords || post.description} shareImage={post.photo}/>
 
