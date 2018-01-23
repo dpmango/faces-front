@@ -14,7 +14,6 @@ export default class Intro extends Component {
   }
   componentDidMount() {
     this.animateIntro();
-    this.preloadImages();
   }
 
   animateIntro = () => {
@@ -24,36 +23,6 @@ export default class Intro extends Component {
       TweenMax.to(control, 1, {opacity: 1, y: 0, delay: 2 + (index * 0.25), ease: Elastic.easeOut.config(1, 0.6)})
     })
     TweenMax.to('.intro__cta', 1, {opacity: 1, y: 0, delay: 4, ease: Back.easeOut.config(2)});
-  }
-
-  preloadImages = () => {
-    let images = [];
-
-    api.get('posts', {
-      data: {},
-    }).then((res) => {
-      res.data.map( (el, index) => {
-        images.push(el.photo.url)
-        if ( res.data.length == index + 1){
-          placePreloaded();
-        }
-      })
-    });
-
-    function preload() {
-      for (var i = 0; i < images.length; i++) {
-        var imageObject = new Image();
-        imageObject.src = images[i];
-      }
-    }
-
-    // problem:
-    // images from S3 are different every request
-
-    function placePreloaded(){
-      preload(images)
-    }
-
   }
 
   render() {

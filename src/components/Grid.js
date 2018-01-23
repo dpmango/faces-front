@@ -25,11 +25,7 @@ export default class Grid extends React.Component {
         data: {},
       }).then((res) => {
         console.log('got API responce', res.data)
-        this.setState({
-          loaded: true
-        });
-        this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
-
+        this.apiDone(res.data);
       });
     }
   }
@@ -56,7 +52,8 @@ export default class Grid extends React.Component {
   setFilter = (filter) => {
     if (this.state.activeFilter !== filter){
       this.setState({
-        activeFilter: filter
+        activeFilter: filter,
+        loaded: false
       }, () => {
         api.get('posts', {
           params: {
@@ -68,17 +65,43 @@ export default class Grid extends React.Component {
             if ( this.canvasGrid ){
               this.canvasGrid.removeGrid();
             }
-            this.setState({
-              loaded: true
-            });
-            this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
-
+            this.apiDone(res.data);
+            // this.canvasGrid = new CanvasGrid(this.gridContainer, res.data, this.redirectToCard, this.state.activeFilter);
           }
         });
       });
     }
+  }
+
+  apiDone = (data) => {
+    let images = [];
+
+    data.map( (el, index) => {
+      images.push(el.photo.url)
+      if ( data.length == index + 1){
+        this.placePreloaded(images, data);
+      }
+    })
+  }
+
+  imgPreload = (images) => {
+    for (var i = 0; i < images.length; i++) {
+      var imageObject = new Image();
+      imageObject.src = images[i];
+    }
+  }
+
+  placePreloaded = (images, data) => {
+    this.imgPreload(images);
+    setTimeout(() => {
+      this.setState({
+        loaded: true
+      });
+      this.canvasGrid = new CanvasGrid(this.gridContainer, data, this.redirectToCard, this.state.activeFilter);
+    }, 1000);
 
   }
+
 
   render() {
     if (!this.state.loaded) {
