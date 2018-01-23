@@ -185,6 +185,16 @@ export default class Profile extends React.Component {
     }
   }
 
+  renderIframe = () => {
+    if (this.state.post.video){
+      return(
+        <div className="profile-info__video">
+          <iframe frameBorder="0" allowFullScreen="1" src={`https://www.youtube.com/embed/${this.state.post.video}?autohide=1&controls=1&showinfo=0&version=3&enablejsapi=1`}></iframe>
+        </div>
+      )
+    }
+  }
+
   render() {
     const { post } = this.state;
 
@@ -225,9 +235,7 @@ export default class Profile extends React.Component {
             </div>
             <div className="profile-info__content profile-animation">
               <p onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
-              <div className="profile-info__video">
-                <iframe frameBorder="0" allowFullScreen="1" src={`https://www.youtube.com/embed/${post.video}?autohide=1&controls=1&showinfo=0&version=3&enablejsapi=1`}></iframe>
-              </div>
+              {this.renderIframe()}
               <p onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.content_after }} />
             </div>
             <div className="profile-info__cta">
