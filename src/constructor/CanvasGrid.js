@@ -404,6 +404,8 @@ export default class CanvasGrid {
       if(e.type === 'panleft' || e.type === 'panright' || e.type === 'panup' || e.type === 'pandown') {
         this.delta.x = e.deltaX;
         this.delta.y = e.deltaY;
+
+        document.querySelector('.grid-container').classList.add('is-grabed');
       }
 
       if (e.type === "panend"){
@@ -415,6 +417,9 @@ export default class CanvasGrid {
         setTimeout(() =>{
           this.gridChangingPosition = false;
         }, 1000);
+
+        document.querySelector('.grid-container').classList.remove('is-grabed');
+
       }
 
       if(e.type === 'tap' || e.type === 'press') {

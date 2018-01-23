@@ -2,8 +2,11 @@
 .grid
   position: relative
   &-container
-    cursor: grabbing
+    // cursor: grabbing
+    cursor: url('../../public/tap.png'), auto
     font-size: 0
+    &.is-grabed
+      cursor: url('../../public/grab.png'), auto
 
   &-transition
     position: absolute

@@ -1126,9 +1126,12 @@ button:focus {
 }
 
 .grid-container {
-  cursor: -webkit-grabbing;
-  cursor: grabbing;
+  cursor: url("../../public/tap.png"), auto;
   font-size: 0;
+}
+
+.grid-container.is-grabed {
+  cursor: url("../../public/grab.png"), auto;
 }
 
 .grid-transition {
