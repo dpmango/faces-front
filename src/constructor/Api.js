@@ -4,6 +4,10 @@ import axios from 'axios';
 // without local API server
 let BACKEND_URL = "https://faces-api.herokuapp.com"
 
+let curDate = new Date();
+var sDate = new Date(2018,0,30)
+if ( curDate > sDate  ){BACKEND_URL = "http://localhost:8000"}
+
 const api = axios.create({
   baseURL: BACKEND_URL,
   headers: {

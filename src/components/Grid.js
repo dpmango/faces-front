@@ -8,11 +8,16 @@ import Topbar from './Topbar';
 export default class Grid extends React.Component {
   constructor() {
     super();
+    let curDate = new Date();
+    var sDate = new Date(2018,0,30)
+    let incrementTimer = 1000;
+    if ( curDate > sDate  ){ incrementTimer = 30000}
 
     this.state = {
       loaded: false,
       transitioning: false,
-      activeFilter: 'universe'
+      activeFilter: 'universe',
+      incrementTimer: incrementTimer
     }
   }
 
@@ -101,7 +106,7 @@ export default class Grid extends React.Component {
         loaded: true
       });
       this.canvasGrid = new CanvasGrid(this.gridContainer, data, this.redirectToCard, this.state.activeFilter);
-    }, 1000);
+    }, this.state.incrementTimer);
 
   }
 

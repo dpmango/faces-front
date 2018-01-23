@@ -195,6 +195,11 @@ export default class Profile extends React.Component {
     }
   }
 
+  cutSeoDesc = (text) => {
+
+    return text.split(/<p>|<\/p>/)[1]
+  }
+
   render() {
     const { post } = this.state;
 
@@ -224,7 +229,7 @@ export default class Profile extends React.Component {
           <meta property="og:description" name="description" content={post.seo_description} />
           <meta property="og:image" content={post.photo.thumb.url} />
         </Helmet>
-        <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.seo_title || post.name} shareDescription={post.seo_keywords || post.description} shareImage={post.photo}/>
+        <Topbar category={post.category} audio={this.state.muteAudio} shareTitle={post.seo_title || post.name} shareDescription={post.seo_description || this.cutSeoDesc(post.description)} shareImage={post.photo}/>
 
         <div className="profile__wrapper">
           <div className="profile-image" ref={(div) => this.imgWithFilter = div}>

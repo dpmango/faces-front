@@ -136,7 +136,7 @@ export default class Topbar extends React.Component {
 
     let share = {
       url: window.location.href,
-      title: this.props.shareTitle ? 'HD-VISIONS' + this.props.shareTitle : 'HD-VISIONS',
+      title: this.props.shareTitle ? 'HD-VISIONS || ' + this.props.shareTitle : 'HD-VISIONS',
       description: this.props.shareDescription ? this.props.shareDescription : null,
       photo: this.props.shareImage ? this.props.shareImage.thumb.url : window.location.origin + logo
     }
