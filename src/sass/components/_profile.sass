@@ -66,22 +66,28 @@
       p
         font-size: 17px
         line-height: 1.67
-      .videodetector
-        position: relative
-        height: 0
-        overflow: hidden
-        padding-bottom: 56.25%
+    .videodetector, &__video
+      position: relative
+      height: 0
+      overflow: hidden
+      padding-bottom: 56.25%
 
-        iframe
-          position: absolute
-          top: 0
-          left: 0
-          width: 100%
-          height: 100%
-        input
-          display: none
-      .remove-videodetector
+      iframe
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+      input
         display: none
+    .remove-videodetector
+      display: none
+    &__cta
+      margin-top: 30px
+      margin-left: 50px
+      .btn
+        font-size: 16px
+        text-transform: uppercase
 
     &__next, &__prev
       position: fixed
@@ -143,6 +149,8 @@
         max-width: 100%
         p
           font-size: 16px
+      &__cta
+        margin-left: 0
 
 +r($mobile)
   .profile

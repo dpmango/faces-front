@@ -29,7 +29,7 @@ export default class Topbar extends React.Component {
     this.state = {
       opened: false,
       sharing: false,
-      backGridCategory: 'grid',
+      backGridCategory: '',
       audioPlaying: false
     }
     this.bgAudio = new Howl({

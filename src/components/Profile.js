@@ -120,14 +120,15 @@ export default class Profile extends React.Component {
     var element = document.querySelector('iframe')
 
     // console.log(element)
-    element.setAttribute('allowfullscreen', "1")
+    // element.setAttribute('allowfullscreen', "1")
 
-    element.setAttribute('src', element.getAttribute('src') + "version=3&enablejsapi=1")
+    // element.setAttribute('src', element.getAttribute('src') + "version=3&enablejsapi=1")
     if (element){
       element.contentDocument.addEventListener('onStateChange', 'player_state_changed');
 
       element.contentDocument.addEventListener('click', function(){
         // alert('click')
+        console.log('click happeed')
       })
     }
 
@@ -222,20 +223,21 @@ export default class Profile extends React.Component {
               </h1>
               <h3 className="profile-info__position profile-animation">{post.position.toUpperCase()}</h3>
             </div>
-            <p className="profile-info__content profile-animation" onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
+            <div className="profile-info__content profile-animation">
+              <p onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.description }} />
+              <div className="profile-info__video">
+                <iframe frameBorder="0" allowFullScreen="1" src={`https://www.youtube.com/embed/${post.video}?autohide=1&controls=1&showinfo=0&version=3&enablejsapi=1`}></iframe>
+              </div>
+              <p onClick={this.muteAudio} ref={(div) => this.contentEl = div} dangerouslySetInnerHTML={{ __html: post.content_after }} />
+            </div>
+            <div className="profile-info__cta">
+              <Link className="btn btn-line" to={`/form`}>
+                <span>Поделиться своим взглядом</span>
+              </Link>
+            </div>
           </div>
           {this.renderPrevBtn()}
           {this.renderNextBtn()}
-          {/* <div className="profile-info__prev" onClick={this.prevProfile.bind(this)}>
-            <div className="btn btn-line">
-              <span>Предыдущий</span>
-            </div>
-          </div>
-          <div className="profile-info__next" onClick={this.nextProfile.bind(this)}>
-            <div className="btn btn-line">
-              <span>Следующий</span>
-            </div>
-          </div> */}
 
         </div>
       </div>

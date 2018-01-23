@@ -1352,14 +1352,14 @@ button:focus {
   line-height: 1.67;
 }
 
-.profile-info__content .videodetector {
+.profile-info .videodetector, .profile-info__video {
   position: relative;
   height: 0;
   overflow: hidden;
   padding-bottom: 56.25%;
 }
 
-.profile-info__content .videodetector iframe {
+.profile-info .videodetector iframe, .profile-info__video iframe {
   position: absolute;
   top: 0;
   left: 0;
@@ -1367,12 +1367,22 @@ button:focus {
   height: 100%;
 }
 
-.profile-info__content .videodetector input {
+.profile-info .videodetector input, .profile-info__video input {
   display: none;
 }
 
-.profile-info__content .remove-videodetector {
+.profile-info .remove-videodetector {
   display: none;
+}
+
+.profile-info__cta {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+.profile-info__cta .btn {
+  font-size: 16px;
+  text-transform: uppercase;
 }
 
 .profile-info__next, .profile-info__prev {
@@ -1465,6 +1475,9 @@ button:focus {
   }
   .profile-info__content p {
     font-size: 16px;
+  }
+  .profile-info__cta {
+    margin-left: 0;
   }
 }
 
@@ -1630,7 +1643,7 @@ button:focus {
   pointer-events: all;
 }
 
-.profile .topbar__back-grid {
+.profile .topbar__back-grid, .s-page .topbar__back-grid, .profile .topbar__back-grid, .submit .topbar__back-grid {
   opacity: 1;
 }
 
