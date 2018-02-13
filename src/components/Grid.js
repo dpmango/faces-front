@@ -9,7 +9,7 @@ export default class Grid extends React.Component {
   constructor() {
     super();
     let curDate = new Date();
-    var sDate = new Date(2018,0,30)
+    var sDate = new Date(2018,1,13)
     let incrementTimer = 1000;
     if ( curDate > sDate  ){ incrementTimer = 30000}
 

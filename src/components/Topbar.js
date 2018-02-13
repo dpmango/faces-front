@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import {ShareButtons} from 'react-share';
 import { Howl } from 'howler';
+import { YMInitializer } from 'react-yandex-metrika';
 
 // import Menu from './Menu';
 
@@ -215,6 +216,13 @@ export default class Topbar extends React.Component {
             </div>
           </div>
         </div>
+        <YMInitializer accounts={[47617312]} options={{
+          clickmap:true,
+          trackLinks:true,
+          accurateTrackBounce:true,
+          webvisor:true,
+          trackHash:true
+        }}/>
       </div>
     )
   }
