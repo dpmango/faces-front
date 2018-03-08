@@ -5,10 +5,6 @@ import axios from 'axios';
 // let BACKEND_URL = "https://faces-api.herokuapp.com"
 let BACKEND_URL = "https://api.hd-visions.ru"
 
-let curDate = new Date();
-var sDate = new Date(2018,1,13)
-if ( curDate > sDate  ){BACKEND_URL = "http://localhost:8000"}
-
 const api = axios.create({
   baseURL: BACKEND_URL,
   headers: {

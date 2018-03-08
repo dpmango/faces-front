@@ -8,28 +8,23 @@ import Topbar from './Topbar';
 export default class Grid extends React.Component {
   constructor() {
     super();
-    let curDate = new Date();
-    var sDate = new Date(2018,1,13)
-    let incrementTimer = 1000;
-    if ( curDate > sDate  ){ incrementTimer = 30000}
 
     this.state = {
       loaded: false,
       transitioning: false,
-      activeFilter: 'universe',
-      incrementTimer: incrementTimer
+      activeFilter: 'universe'
     }
   }
 
   componentDidMount() {
-    console.log('filter param for grid', this.props.match.params.filter)
+    // console.log('filter param for grid', this.props.match.params.filter)
     if ( this.props.match.params.filter ){
       this.setFilter(this.props.match.params.filter)
     } else {
       api.get('posts', {
         data: {},
       }).then((res) => {
-        console.log('got API responce', res.data)
+        // console.log('got API responce', res.data)
         this.apiDone(res.data);
       });
     }
@@ -40,7 +35,7 @@ export default class Grid extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log('component recived props', nextProps.match.params.filter)
+    // console.log('component recived props', nextProps.match.params.filter)
     if ( nextProps.match.params.filter ){
       this.setFilter(nextProps.match.params.filter)
     }
@@ -69,7 +64,7 @@ export default class Grid extends React.Component {
           filter: filter
         },
       }).then((res) => {
-        console.log('got API responce with filter', res.data)
+        // console.log('got API responce with filter', res.data)
         if ( res.data.length > 0 ){
           if ( this.canvasGrid ){
             this.canvasGrid.removeGrid();
@@ -95,19 +90,19 @@ export default class Grid extends React.Component {
   imgPreload = (images) => {
     for (var i = 0; i < images.length; i++) {
       var imageObject = new Image();
+      // imageObject.onload = function(){
+      //
+      // }
       imageObject.src = images[i];
     }
   }
 
   placePreloaded = (images, data) => {
     this.imgPreload(images);
-    setTimeout(() => {
-      this.setState({
-        loaded: true
-      });
-      this.canvasGrid = new CanvasGrid(this.gridContainer, data, this.redirectToCard, this.state.activeFilter);
-    }, this.state.incrementTimer);
-
+    this.setState({
+      loaded: true
+    });
+    this.canvasGrid = new CanvasGrid(this.gridContainer, data, this.redirectToCard, this.state.activeFilter);
   }
 
 
